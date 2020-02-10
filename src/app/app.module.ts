@@ -9,6 +9,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { MainComponent } from './layouts/main/main.component';
 import { SidenavComponent } from './layouts/main/sidenav/sidenav.component';
 import { FeedComponent } from './layouts/main/feed/feed.component';
+import { PostComponent } from './components/post/post.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FeedComponent } from './layouts/main/feed/feed.component';
     ProfileComponent,
     MainComponent,
     SidenavComponent,
-    FeedComponent
+    FeedComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
