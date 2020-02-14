@@ -1,8 +1,11 @@
 $background: white;
+$ico-color: gray;
+$ico-color_hover: rgba(241, 63, 63, 0.91);
+
 .post {
   background-color: $background;
   font-family: ysans,Arial,sans-serif;
-  margin: 50px;
+  margin-bottom: 50px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 5px 15px rgba(139,160,176,0.5);
@@ -20,8 +23,8 @@ $background: white;
     border-radius: 15px 15px 0 0;
 
     .post-header__userpic {
-      background-color: deepskyblue;
       border-radius: 50%;
+      overflow: hidden;
       width: 40px;
       height: 40px;
     }
@@ -87,21 +90,32 @@ $background: white;
     .event-actions__likes, .event-actions__favorite {
       margin-left: 20px;
     }
+    .event-actions_flex {
+      display: flex;
+      align-items: center;
+    }
+    .event-actions__counter {
+      color: rgba(147,156,176,.8);
+      font-family: ysans,Arial,sans-serif;
+      font-size: 14px;
+      padding-left: 3px;
+      color: inherit;
+    }
   }
 }
 
+.color {
+  color: $ico-color;
 
+}
 
+.color:hover {
+  color: $ico-color_hover;
+}
 
+.color-black:hover {
+  color:black;
+}
 
-
-
-
-
-
-
-
-
-
-
+img {max-width:100%;height:auto;}
 

@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import '~material-design-icons/iconfont/material-icons.css';
+
+
 body {
   margin: 0;
   padding: 0;
@@ -9,4 +13,20 @@ body {
 
 .pointer {
   cursor: pointer;
+}
+
+
+.nav-btn {
+  font-family: ysans,Arial,sans-serif;
+  text-decoration: none;
+  margin-bottom: 5px;
+  font-size: 13pt;
+  color: black;
+  padding: 8px;
+  cursor: pointer;
+}
+.nav-btn:hover {
+  background-color: rgba(214, 224, 236, 0.72);
+  border-radius: 20px;
+  color: rgba(1, 0, 0, 0.91);
 }

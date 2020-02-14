@@ -1,4 +1,42 @@
 .feed__container {
-  width: 700px;
+  width: 650px;
   height: 23300px;
+  display: flex;
+  flex-direction: column;
+
+  .feed__navigate {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    justify-content: space-between;
+    .feed__levels {
+      display: flex;
+    }
+  }
+  .feed__posts {
+    margin: 0;
+  }
+  .font-size-10 {
+    font-size: 10pt;
+  }
+
+  .feed__sort {
+    display: flex;
+    padding-top: 10px;
+    font-style: oblique;
+    font-family: Bradley Hand, cursive;
+
+    .feed__srot-term {
+      margin: 0 5px;
+    }
+    .feed__srot-term_blue {}
+
+    .feed__srot-term:hover {
+      color: #0095da;
+      cursor: pointer;
+    }
+  }
 }
+
+
+
