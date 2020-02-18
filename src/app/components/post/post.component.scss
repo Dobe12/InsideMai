@@ -27,6 +27,8 @@ $ico-color_hover: rgba(241, 63, 63, 0.91);
       overflow: hidden;
       width: 40px;
       height: 40px;
+
+      img {max-width:100%;height:auto;}
     }
 
     .post-header__userinfo {
@@ -117,5 +119,5 @@ $ico-color_hover: rgba(241, 63, 63, 0.91);
   color:black;
 }
 
-img {max-width:100%;height:auto;}
+
 

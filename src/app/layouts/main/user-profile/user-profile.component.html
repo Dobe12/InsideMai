@@ -1,0 +1,23 @@
+<div class="user-profile__container">
+  <div class="user-profile__user-info">
+    <div class="user-profile__header">
+      <div class="user-profile__pic">
+        <img src="https://i.pinimg.com/originals/06/2d/0c/062d0cb00faf1879c6474b5d43cde923.jpg">
+      </div>
+    </div>
+    <div class="user-profile__name">Петя Грущенко</div>
+    <div class="user-profile__buttons">
+      <div class="user-profile__subscribe">
+        <i class="material-icons">
+          control_point
+        </i>
+        Подписаться
+      </div>
+    </div>
+  </div>
+  <div class="user-profile__user-posts">
+    <div class="user-profile__user-posts" *ngFor="let i of collection">
+      <app-post></app-post>
+    </div>
+  </div>
+</div>

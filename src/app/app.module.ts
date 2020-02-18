@@ -10,6 +10,7 @@ import { MainComponent } from './layouts/main/main.component';
 import { SidenavComponent } from './layouts/main/sidenav/sidenav.component';
 import { FeedComponent } from './layouts/main/feed/feed.component';
 import { PostComponent } from './components/post/post.component';
+import { UserProfileComponent } from './layouts/main/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { PostComponent } from './components/post/post.component';
     MainComponent,
     SidenavComponent,
     FeedComponent,
-    PostComponent
+    PostComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

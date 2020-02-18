@@ -1,0 +1,70 @@
+.user-profile__container {
+  margin-top: 10px;
+  font-family: ysans,Arial,sans-serif;
+  .user-profile__user-info {
+    width: 650px;
+    height: 200px;
+    background-color: white;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 15px rgba(139,160,176,0.5);
+    border-radius: 15px;
+    overflow: hidden;
+
+  }
+
+  .user-profile__header {
+    height: 60%;
+    background-image: url(https://yastatic.net/s3/district/prod/build/c0fba8bafaf86f831017cf3343989a17.svg);
+    position: relative;
+
+    .user-profile__pic {
+      border-radius: 50%;
+      border: 3px solid white;
+      overflow: hidden;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 50%;
+      left: 5%;
+
+      img {max-width:100%;height:auto;}
+    }
+  }
+
+  .user-profile__name {
+    padding-top: 50px;
+    padding-left: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0;
+
+  }
+  .user-profile__buttons {
+    position: relative;
+
+    .user-profile__subscribe {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      right: 20px;
+      bottom: 5px;
+      font-family: ysans, Arial, sans-serif;
+      text-decoration: none;
+      font-size: 13pt;
+      background-color: rgba(0, 175, 250, 0.67);
+      padding: 5px 20px;
+      border-radius: 25px;
+    }
+
+    .user-profile__subscribe:hover {
+      cursor: pointer;
+      background-color: #006897;
+    }
+  }
+
+  .user-profile__user-posts {
+    margin: 0;
+  }
+}
