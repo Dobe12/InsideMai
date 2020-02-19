@@ -11,6 +11,9 @@ import { SidenavComponent } from './layouts/main/sidenav/sidenav.component';
 import { FeedComponent } from './layouts/main/feed/feed.component';
 import { PostComponent } from './components/post/post.component';
 import { UserProfileComponent } from './layouts/main/user-profile/user-profile.component';
+import { CommentComponent } from './components/comment/comment.component';
+import { UserPostComponent } from './layouts/main/user-post/user-post.component';
+import { LikeComponent } from './components/like/like.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { UserProfileComponent } from './layouts/main/user-profile/user-profile.c
     SidenavComponent,
     FeedComponent,
     PostComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    CommentComponent,
+    UserPostComponent,
+    LikeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,19 @@
+.like__container {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  color: gray;
+  cursor: pointer;
+
+  .like__counter {
+    font-family: ysans,Arial,sans-serif;
+    font-size: 14px;
+    padding-left: 3px;
+    color: inherit;
+
+  }
+}
+
+.like__container:hover {
+  color: rgba(241, 63, 63, 0.91);
+}

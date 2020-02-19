@@ -89,7 +89,7 @@ $ico-color_hover: rgba(241, 63, 63, 0.91);
       margin-left: auto;
     }
 
-    .event-actions__likes, .event-actions__favorite {
+    .event-actions__favorite {
       margin-left: 20px;
     }
     .event-actions_flex {
@@ -108,7 +108,6 @@ $ico-color_hover: rgba(241, 63, 63, 0.91);
 
 .color {
   color: $ico-color;
-
 }
 
 .color:hover {
