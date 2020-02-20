@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +15,7 @@ import { UserProfileComponent } from './layouts/main/user-profile/user-profile.c
 import { CommentComponent } from './components/comment/comment.component';
 import { UserPostComponent } from './layouts/main/user-post/user-post.component';
 import { LikeComponent } from './components/like/like.component';
+import { NewCommentFormComponent } from './components/new-comment-form/new-comment-form.component';
 
 @NgModule({
   declarations: [
@@ -28,11 +30,13 @@ import { LikeComponent } from './components/like/like.component';
     UserProfileComponent,
     CommentComponent,
     UserPostComponent,
-    LikeComponent
+    LikeComponent,
+    NewCommentFormComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    TextareaAutosizeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
