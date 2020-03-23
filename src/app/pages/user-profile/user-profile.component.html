@@ -5,7 +5,7 @@
         <img src="https://i.pinimg.com/originals/06/2d/0c/062d0cb00faf1879c6474b5d43cde923.jpg">
       </div>
     </div>
-    <div class="user-profile__name">Петя Грущенко</div>
+    <div class="user-profile__name">{{user?.firstName}} {{user?.lastName}}</div>
     <div class="user-profile__buttons">
       <div class="user-profile__subscribe">
         <i class="material-icons">
@@ -16,8 +16,8 @@
     </div>
   </div>
   <div class="user-profile__user-posts">
-    <div class="user-profile__user-posts" *ngFor="let i of collection">
-      <app-post></app-post>
+    <div class="user-profile__user-posts" *ngFor="let post of userPosts">
+      <app-post [post]="post"></app-post>
     </div>
   </div>
 </div>

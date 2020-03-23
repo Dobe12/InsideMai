@@ -2,14 +2,14 @@
   <div class="post-header">
     <div class="post-header__userpic pointer"><img src="https://i.pinimg.com/originals/06/2d/0c/062d0cb00faf1879c6474b5d43cde923.jpg"></div>
     <div class="post-header__userinfo">
-      <div class="post-header__username pointer">Вася Пупкин</div>
-      <div class="post-header__time">20:05:2016</div>
+      <div class="post-header__username pointer" [routerLink] = "['/user', post.author.id]">{{post.author.firstName}} {{post.author.lastName}}</div>
+      <div class="post-header__time">{{post.publishDate | date}}</div>
     </div>
   </div>
   <div class="post-content">
-    <div class="post-content__title pointer">Новая тема ппцwefefw</div>
+    <div class="post-content__title pointer" [routerLink] = "['/post', post.id]">{{post.title}}</div>
     <div class="post-content__article">
-      С другой стороны постоянный количественный рост и сфера нашей активности играет важную роль в формировании позиций, занимаемых участниками в отношении поставленных задач! Дорогие друзья, сложившаяся структура организации требует от нас системного анализа экономической целесообразности принимаемых решений. Задача организации, в особенности же рамки и место обучения кадров требует от нас системного анализа новых предложений.
+      {{post.content}}
     </div>
   </div>
   <div class="event-actions">
@@ -17,7 +17,7 @@
       <i class="material-icons">
         mode_comment
       </i>
-      <span class="event-actions__counter">23</span>
+      <span class="event-actions__counter" [routerLink] = "['/post', post.id]">{{post.commentsCount}}</span>
     </div>
     <div class="event-actions__complain event-actions_flex pointer color color-black">
       <i class="material-icons">
@@ -29,7 +29,7 @@
         bookmark
       </i>
     </div>
-    <app-like></app-like>
+    <app-like  [likesCount]="post.likesCount"></app-like>
   </div>
   <div class="post-comments"></div>
 </div>

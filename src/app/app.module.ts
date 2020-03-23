@@ -1,21 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
-import { NgModule } from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpInterceptor} from "@angular/common/http";
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './layouts/header/header.component';
+import { HeaderComponent } from './shared/layout/header/header.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { MainComponent } from './layouts/main/main.component';
-import { SidenavComponent } from './layouts/main/sidenav/sidenav.component';
-import { FeedComponent } from './layouts/main/feed/feed.component';
+import { MainComponent } from './shared/layout/main/main.component';
+import { SidenavComponent } from './shared/layout/sidenav/sidenav.component';
+import { FeedComponent } from './pages/feed/feed.component';
 import { PostComponent } from './components/post/post.component';
-import { UserProfileComponent } from './layouts/main/user-profile/user-profile.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { CommentComponent } from './components/comment/comment.component';
-import { UserPostComponent } from './layouts/main/user-post/user-post.component';
+import { UserPostComponent } from './pages/user-post/user-post.component';
 import { LikeComponent } from './components/like/like.component';
 import { NewCommentFormComponent } from './components/new-comment-form/new-comment-form.component';
+import {AppErrorHandler} from "./core/validators/app-error-handler";
+import {DataService} from "./core/services/data.service";
+import {HttpErrorInterceptor} from "./core/interceptros/http.interceptor";
+import {PostsService} from "./core/services/posts.service";
+import {CommentsService} from "./core/services/comments.service";
+import {DeparmentsService} from "./core/services/deparments.service";
+import {UsersService} from "./core/services/users.service";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -31,14 +41,26 @@ import { NewCommentFormComponent } from './components/new-comment-form/new-comme
     CommentComponent,
     UserPostComponent,
     LikeComponent,
-    NewCommentFormComponent
+    NewCommentFormComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    TextareaAutosizeModule
+    TextareaAutosizeModule,
+    HttpClientModule,
+    RouterModule.forRoot([
+      { path: '', component: FeedComponent},
+      { path: 'post/:id', component: UserPostComponent},
+      { path: 'user/:id', component: UserProfileComponent}
+    ])
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
+    PostsService,
+    CommentsService,
+    DeparmentsService,
+    UsersService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
