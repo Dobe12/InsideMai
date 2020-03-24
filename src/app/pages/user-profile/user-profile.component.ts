@@ -4,8 +4,8 @@ import {UsersService} from "../../core/services/users.service";
 import {User} from "../../core/models/user";
 import {Post} from "../../core/models/post";
 import {PostsService} from "../../core/services/posts.service";
-import {combineLatest, forkJoin, Observable, of} from "rxjs";
 import {mergeMap} from "rxjs/operators";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-user-profile',

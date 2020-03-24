@@ -11,4 +11,8 @@ export class PostsService extends DataService {
   getUserPost(userId) {
     return this.http.get(this.url + '/user/' + userId);
   }
+
+  getPostComments(postId) {
+    return this.http.get(this.url + '/' + postId + '/comments');
+  }
 }
