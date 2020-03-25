@@ -1,8 +1,14 @@
 <div class="header__container">
   <div class="header__wrapper">
-    <div class="header__logo"><img src="../../../../assets/emblema_mai.png" alt=""></div>
-    <div class="header__search"><app-search-form></app-search-form></div>
-    <div class="header__profile"><app-profile></app-profile></div>
+    <div class="header__logo pointer" [routerLink]="['']">
+      <img src="../../../../assets/emblema_mai.png" alt="">
+    </div>
+    <div class="header__search">
+      <app-search-form></app-search-form>
+    </div>
+    <div class="header__profile">
+      <app-profile [routerLink]="['/login']"></app-profile>
+    </div>
   </div>
 </div>
 

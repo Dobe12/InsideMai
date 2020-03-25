@@ -26,6 +26,7 @@ import {CommentsService} from "./core/services/comments.service";
 import {DeparmentsService} from "./core/services/deparments.service";
 import {UsersService} from "./core/services/users.service";
 import {RouterModule} from "@angular/router";
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {RouterModule} from "@angular/router";
     UserPostComponent,
     LikeComponent,
     NewCommentFormComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,9 +51,14 @@ import {RouterModule} from "@angular/router";
     TextareaAutosizeModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: '', component: FeedComponent},
-      { path: 'post/:id', component: UserPostComponent},
-      { path: 'user/:id', component: UserProfileComponent}
+      { path: 'login', component: LoginComponent},
+      { path: '', component: MainComponent,
+        children: [
+          {path: '', component: FeedComponent },
+          {path: 'post/:id', component: UserPostComponent},
+          {path: 'user/:id', component: UserProfileComponent}
+        ]
+      }
     ])
   ],
   providers: [
