@@ -27,6 +27,10 @@ import {DeparmentsService} from "./core/services/deparments.service";
 import {UsersService} from "./core/services/users.service";
 import {RouterModule} from "@angular/router";
 import { LoginComponent } from './pages/login/login.component';
+import {AuthService} from "./core/auth/auth.service";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {JwtHelperService, JwtModule} from "@auth0/angular-jwt";
+import {AuthGuard} from "./core/auth/auth-guard.service";
 
 @NgModule({
   declarations: [
@@ -51,22 +55,31 @@ import { LoginComponent } from './pages/login/login.component';
     TextareaAutosizeModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: 'login', component: LoginComponent},
-      { path: '', component: MainComponent,
+      {path: 'login', component: LoginComponent},
+      {
+        path: '',
+        component: MainComponent,
+        canActivate: [AuthGuard],
         children: [
-          {path: '', component: FeedComponent },
+          {path: '', component: FeedComponent},
           {path: 'post/:id', component: UserPostComponent},
           {path: 'user/:id', component: UserProfileComponent}
         ]
       }
-    ])
+    ]),
+    ReactiveFormsModule,
+    FormsModule,
+    JwtModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
     PostsService,
     CommentsService,
     DeparmentsService,
-    UsersService
+    UsersService,
+    AuthService,
+    JwtHelperService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

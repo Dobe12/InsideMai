@@ -3,5 +3,11 @@
   margin: 0 auto;
   display: flex;
   justify-content: center;
+}
 
+.bg {
+  //background-image: url("../../../../assets/login-image.jpg");
+  background-repeat: no-repeat;
+
+  background-attachment: fixed;
 }
