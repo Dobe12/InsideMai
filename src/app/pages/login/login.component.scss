@@ -30,16 +30,27 @@ $white: white;
     }
 
     .login-form__fields {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      margin-bottom: 10%;
+      text-align: center;
+      position: relative;
+
+
+      .alert-danger {
+        color: red;
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        left: 0;
+        right: 0;
+
+      }
 
       .login-form__field {
         width: 80%;
         height: 30px;
-        margin: 4% 0 4% 0;
         box-sizing:border-box;
+        margin-top: 12%;
         padding: 5px 20px;
         border-radius: 5px;
         border: none;
@@ -53,7 +64,7 @@ $white: white;
     .login-form__button {
       color: $white;
       background-color: #368ca7;
-      margin-top: 20px;
+      margin-top: 20%;
       width: 50%;
       height: 25px;
       border: none;
@@ -71,11 +82,16 @@ $white: white;
       font-size: 10pt;
       display: flex;
       position: relative;
-      bottom:  28%;
+      bottom:  36%;
       margin: 0 auto;
       justify-content: space-between;
       width: 80%;
       color: $white;
+
+      .login-form__remember {
+        display: flex;
+        align-items: center;
+      }
     }
   }
 }

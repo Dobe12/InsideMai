@@ -7,16 +7,20 @@
     <form action="" class="login-form__fields"
           [formGroup]="authForm"
           (ngSubmit)="signIn()">
+      <div class="alert-danger" *ngIf="submitted && email.invalid">Введите почту</div>
       <input
           type="text"
           class="login-form__field"
           formControlName="email"
-          placeholder="email">
+          placeholder="email"
+          id="email">
+      <div class="alert-danger" *ngIf="submitted && password.invalid">Введите пароль</div>
       <input
           type="password"
           class="login-form__field"
           formControlName="password"
-          placeholder="password">
+          placeholder="password"
+          id="password">
       <button class=login-form__button> Войти </button>
     </form>
     <div class="login-form__footer">

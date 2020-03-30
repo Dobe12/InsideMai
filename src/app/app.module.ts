@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import {ErrorHandler, NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpInterceptor} from "@angular/common/http";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +34,7 @@ import {AuthService} from "./core/auth/auth.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {JwtHelperService, JwtModule} from "@auth0/angular-jwt";
 import {AuthGuard} from "./core/auth/auth-guard.service";
+import {JwtInterceptor} from "./core/interceptros/jwt.interceptor";
 
 @NgModule({
   declarations: [
@@ -54,6 +58,10 @@ import {AuthGuard} from "./core/auth/auth-guard.service";
     AppRoutingModule,
     TextareaAutosizeModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 1500
+    }),
     RouterModule.forRoot([
       {path: 'login', component: LoginComponent},
       {
@@ -73,11 +81,11 @@ import {AuthGuard} from "./core/auth/auth-guard.service";
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     PostsService,
     CommentsService,
     DeparmentsService,
     UsersService,
-    AuthService,
     JwtHelperService,
     AuthGuard
   ],

@@ -8,9 +8,8 @@ import {User} from "../../../core/models/user";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  currentUser: User;
-
-  constructor(public authService: AuthService) { }
+  constructor(public auth: AuthService) {
+  }
 
   ngOnInit(): void {
   }

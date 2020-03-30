@@ -1,7 +1,7 @@
 import {Department} from "./department";
 import {Post} from "./post";
 
-export interface  User {
+export class  User {
   id: number;
   firstName: string;
   lastName: string;
@@ -9,4 +9,8 @@ export interface  User {
   userPic: string;
   department: Department;
   posts: Post[];
+  //в будущем нна стороне бека сделать мапер, который будет отсылать еще и fuulname
+  fullName: string;
+
+
 }

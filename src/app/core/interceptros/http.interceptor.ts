@@ -7,11 +7,12 @@ import {
 } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, retry} from "rxjs/operators";
+import {ToastrService} from "ngx-toastr";
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(private toastr: ToastrService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
@@ -21,11 +22,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         let errorMessage = '';
         // if client side error else server side error
         if (error.error instanceof ErrorEvent) {
-          errorMessage = `Ошибка: ${error.error.message}`;
+          errorMessage = `Ошибка: ${error.error}`;
         } else {
-          errorMessage = `Код ошибки: ${error.status}. ${error.message}`;
+          errorMessage = `Код ошибки: ${error.status}. ${error.error}`;
         }
 
+        this.toastr.error(error.error);
         return throwError(errorMessage);
       })
     );

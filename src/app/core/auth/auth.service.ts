@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import {DataService} from "../services/data.service";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {map} from "rxjs/operators";
+import {distinctUntilChanged, map} from "rxjs/operators";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {UsersService} from "../services/users.service";
+import {User} from "../models/user";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +14,17 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 export class AuthService  {
   private url = environment.api_url + "account/login";
   public jwtHelper: JwtHelperService = new JwtHelperService();
+  private currentUserSubject = new BehaviorSubject<User>({} as User);
+  public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private usersService: UsersService) {
+    if (this.isLoggedIn()) {
+      this.setUser(localStorage.getItem('token'));
+    }
+  }
+
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
   }
 
   login(credentials) {
@@ -22,13 +33,22 @@ export class AuthService  {
         const result = response;
         if (result && result.token) {
           localStorage.setItem('token', result.token);
+
+          this.setUser(result.token);
           return true;
         }
     }));
   }
 
+  private setUser(token) {
+    const userId = this.jwtHelper.decodeToken(token).UserID;
+    this.usersService.get(userId).subscribe(
+      response =>  this.currentUserSubject.next(response as User));
+  }
+
   logout() {
     localStorage.removeItem('token');
+    this.currentUserSubject.next(null);
   }
 
   isLoggedIn() {
@@ -37,18 +57,8 @@ export class AuthService  {
     if (!token) {
       return false;
     }
-
     return !this.jwtHelper.isTokenExpired(token);
   }
-
-  get currentUser() {
-    const token = localStorage.getItem('token');
-
-    if (!token) { return null; }
-
-    return this.jwtHelper.decodeToken(token);
-  }
-
 }
 
 
