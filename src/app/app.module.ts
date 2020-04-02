@@ -3,6 +3,7 @@ import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import {ErrorHandler, NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpInterceptor} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { ToastrModule } from 'ngx-toastr';
 
@@ -35,6 +36,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {JwtHelperService, JwtModule} from "@auth0/angular-jwt";
 import {AuthGuard} from "./core/auth/auth-guard.service";
 import {JwtInterceptor} from "./core/interceptros/jwt.interceptor";
+import { CreatePostComponent } from './pages/create-post/create-post.component';
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -52,6 +55,7 @@ import {JwtInterceptor} from "./core/interceptros/jwt.interceptor";
     LikeComponent,
     NewCommentFormComponent,
     LoginComponent,
+    CreatePostComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +63,7 @@ import {JwtInterceptor} from "./core/interceptros/jwt.interceptor";
     TextareaAutosizeModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    EditorModule,
     ToastrModule.forRoot({
       timeOut: 1500
     }),
@@ -71,13 +76,15 @@ import {JwtInterceptor} from "./core/interceptros/jwt.interceptor";
         children: [
           {path: '', component: FeedComponent},
           {path: 'post/:id', component: UserPostComponent},
-          {path: 'user/:id', component: UserProfileComponent}
+          {path: 'user/:id', component: UserProfileComponent},
+          {path: 'create', component: CreatePostComponent}
         ]
       }
     ]),
     ReactiveFormsModule,
     FormsModule,
-    JwtModule
+    JwtModule,
+    MatInputModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},

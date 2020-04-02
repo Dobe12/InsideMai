@@ -1,8 +1,8 @@
 <div class="comment__container">
-  <div class="comment__user-photo"><img [src]="comment.author.userPic"></div>
+  <div class="comment__user-photo"><img [src]="comment?.author?.userPic"></div>
   <div class="comment__content">
     <div class="comment__header">
-      <div class="comment__user-name"> {{comment.author.firstName}} {{comment.author.lastName}}</div>
+      <div class="comment__user-name"> {{comment?.author?.firstName}} {{comment?.author?.lastName}}</div>
       <div class="comment__user-date">{{comment.publishDate | date}}</div>
     </div>
     <div class="comment__text">{{comment.content}}</div>

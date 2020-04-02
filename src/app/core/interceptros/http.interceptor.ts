@@ -8,11 +8,12 @@ import {
 import {Observable, throwError} from 'rxjs';
 import {catchError, retry} from "rxjs/operators";
 import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-  constructor(private toastr: ToastrService) {}
+  constructor(private toastr: ToastrService, private route: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
@@ -26,6 +27,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         } else {
           errorMessage = `Код ошибки: ${error.status}. ${error.error}`;
         }
+
+        this.route.navigate(['/']);
 
         this.toastr.error(error.error);
         return throwError(errorMessage);
