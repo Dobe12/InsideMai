@@ -28,7 +28,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           errorMessage = `Код ошибки: ${error.status}. ${error.error}`;
         }
 
-        this.route.navigate(['/']);
+      //  this.route.navigate(['/']);
 
         this.toastr.error(error.error);
         return throwError(errorMessage);

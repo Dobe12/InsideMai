@@ -1,18 +1,31 @@
 <div class="create-post__container">
-  <form >
-    <input type="text" matInput placeholder="Title">
-      <editor
-        apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"
-        class="mat-elevation-z1"
-        [init]="{
+  <h2 class="create-post__title" >Создать пост</h2>
+  <form
+    [formGroup]="createPostForm"
+    (ngSubmit)="createPost()">
+    <mat-form-field class="create-post__title-field">
+      <input
+        formControlName="title"
+        matInput
+        placeholder="Заголовок темы (не обязательно)"
+        type="text"/>
+    </mat-form-field>
+    <editor
+      apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"
+      formControlName="content"
+      [init]="{
             icons: 'material',
             skin: 'borderless',
             plugins: 'wordcount',
             menubar: false,
-            min_height: 150
-          }"
-      ></editor>
+            min_height: 400
+          }">
+    </editor>
+    <button class="create-post__button">
+      Создать
+    </button>
   </form>
+
 </div>
 
 
