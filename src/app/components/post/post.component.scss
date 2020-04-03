@@ -66,6 +66,7 @@ $ico-color_hover: rgba(241, 63, 63, 0.91);
     }
 
     .post-content__article {
+      word-wrap: break-word;
       padding: 5px 0;
       margin: 8px 0 0;
       color: #222;

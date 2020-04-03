@@ -10,5 +10,22 @@
     position: fixed;
     margin-right: 30px;
 
+    .create-post-btn {
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 15px;
+      position: relative;
+      right: 7%;
+      background-color: #0095da;
+      text-align: center;
+      padding: 5px 10px;
+      color: white;
+      font-weight: 400;
+      font-size: 12pt;
+
+      &:hover {
+        background-color: #006393;
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
-import {ErrorHandler, NgModule} from '@angular/core';
+import {ErrorHandler, NgModule, SecurityContext} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpInterceptor} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditorModule } from '@tinymce/tinymce-angular';
@@ -22,8 +22,6 @@ import { CommentComponent } from './components/comment/comment.component';
 import { UserPostComponent } from './pages/user-post/user-post.component';
 import { LikeComponent } from './components/like/like.component';
 import { NewCommentFormComponent } from './components/new-comment-form/new-comment-form.component';
-import {AppErrorHandler} from "./core/validators/app-error-handler";
-import {DataService} from "./core/services/data.service";
 import {HttpErrorInterceptor} from "./core/interceptros/http.interceptor";
 import {PostsService} from "./core/services/posts.service";
 import {CommentsService} from "./core/services/comments.service";
@@ -31,13 +29,13 @@ import {DeparmentsService} from "./core/services/deparments.service";
 import {UsersService} from "./core/services/users.service";
 import {RouterModule} from "@angular/router";
 import { LoginComponent } from './pages/login/login.component';
-import {AuthService} from "./core/auth/auth.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {JwtHelperService, JwtModule} from "@auth0/angular-jwt";
 import {AuthGuard} from "./core/auth/auth-guard.service";
 import {JwtInterceptor} from "./core/interceptros/jwt.interceptor";
 import { CreatePostComponent } from './pages/create-post/create-post.component';
 import {MatInputModule} from "@angular/material/input";
+import {MarkdownModule} from "ngx-markdown";
 
 @NgModule({
   declarations: [
@@ -64,6 +62,9 @@ import {MatInputModule} from "@angular/material/input";
     HttpClientModule,
     BrowserAnimationsModule,
     EditorModule,
+    MarkdownModule.forRoot({
+      sanitize: SecurityContext.NONE
+    }),
     ToastrModule.forRoot({
       timeOut: 1500
     }),
@@ -84,7 +85,7 @@ import {MatInputModule} from "@angular/material/input";
     ReactiveFormsModule,
     FormsModule,
     JwtModule,
-    MatInputModule
+    MatInputModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
