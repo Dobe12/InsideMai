@@ -1,6 +1,5 @@
 $background: white;
 $ico-color: gray;
-$ico-color_hover: rgba(241, 63, 63, 0.91);
 
 .post {
   background-color: $background;
@@ -8,7 +7,7 @@ $ico-color_hover: rgba(241, 63, 63, 0.91);
   margin-bottom: 50px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 5px 15px rgba(139,160,176,0.5);
+  box-shadow: var(--shadow);
   border-radius: 15px;
 
   .post-header {
@@ -16,7 +15,7 @@ $ico-color_hover: rgba(241, 63, 63, 0.91);
     position: relative;
     display: flex;
     align-items:center;
-    padding: 0 30px;
+    padding: 0 15px;
     bottom: 5px;
     width: auto;
     height: 50px;
@@ -36,7 +35,7 @@ $ico-color_hover: rgba(241, 63, 63, 0.91);
       height: 40px;
       display: flex;
       flex-direction: column;
-      padding-left: 5%;
+      padding-left: 3%;
       justify-content: center;
     }
 
@@ -112,7 +111,7 @@ $ico-color_hover: rgba(241, 63, 63, 0.91);
 }
 
 .color:hover {
-  color: $ico-color_hover;
+  color: var(--red);
 }
 
 .color-black:hover {

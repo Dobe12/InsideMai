@@ -1,5 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
-$post-width: 650px;
+:root {
+  --mai-color: rgb(0, 149, 218);
+  --mar-color-lighter: deepskyblue;
+  --post-width: 650px;
+
+  --shadow: 0 5px 15px rgba(139,160,176,0.5);
+  --red: rgba(241, 63, 63, 0.91);
+}
+
 
 @import '~material-design-icons/iconfont/material-icons.css';
 
@@ -34,3 +42,22 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+//Checkbox
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: deepskyblue;
+}
+.mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+  background-color: deepskyblue !important;
+}
+
+//Title
+.mat-focused .mat-form-field-label, .mat-form-field-ripple {
+  color: var(--mai-color)  !important;
+}
+.mat-form-field-ripple {
+  background-color: deepskyblue !important;
+}
+.tox-statusbar {
+  display: none !important;
+}

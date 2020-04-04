@@ -4,12 +4,11 @@ $mai-color: rgb(0, 149, 218);
 
 .create-post__container {
   margin-top: 50px;
-  position: relative;
   background-color: white;
-  box-shadow: 0 5px 15px rgba(139,160,176,0.5);
+  box-shadow: var(--shadow);
   border-radius: 15px;
-  padding: 30px 30px 80px 30px;
-  width: 650px;
+  padding: 30px;
+  width: var(--post-width);
 
   .create-post__title {
     font-family: ysans,Arial,sans-serif;
@@ -20,29 +19,42 @@ $mai-color: rgb(0, 149, 218);
   }
 
   .create-post__button {
-    position: absolute;
     right: 50px;
     bottom: 30px;
     width: 150px;
     font-size: 13pt;
-    background-color: rgba(0, 175, 250, 0.67);
+    background-color: var(--mai-color);
     padding: 5px 20px;
     border: none;
     border-radius: 25px;
   }
 
-  .create-post__button:hover {
-    cursor: pointer;
-    background-color: #006897;
+  .create-post__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .create-post__anon {
+      font-size: 12pt;
+      font-weight: 600;
+      font-family: "Jura", sans-serif;
+      color: black;
+    }
+
+    .create-post__button {
+      width: 150px;
+      font-size: 13pt;
+      background-color: deepskyblue;
+      padding: 5px 20px;
+      border: none;
+      border-radius: 25px;
+    }
+
+    .create-post__button:hover {
+      cursor: pointer;
+      background-color: #006897;
+    }
   }
 }
 
-::ng-deep .mat-focused .mat-form-field-label, ::ng-deep.mat-form-field-ripple {
-  color: $mai-color !important;
-}
-::ng-deep.mat-form-field-ripple {
-    background-color: $mai-color !important;
-}
-::ng-deep.tox-statusbar {
-  display: none !important;
-}
+

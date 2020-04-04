@@ -8,6 +8,7 @@ export interface  Post {
   publishDate: string;
   likesCount: number;
   savesCount: number;
+  isAnonymous: boolean;
   commentsCount: number;
   author: User;
   department: Department;

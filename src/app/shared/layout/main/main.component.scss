@@ -1,5 +1,5 @@
 .main__container {
-  width: 650px;
+  width: var(--post-width);
   margin: 0 auto;
   display: flex;
   justify-content: center;

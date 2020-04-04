@@ -6,8 +6,8 @@
     <div class="post-header__userinfo">
       <div class="post-header__username pointer"
            [routerLink] = "['/user', post.author.id]">
-        {{post?.author?.firstName}}
-        {{post?.author?.lastName}}
+<!--       После добавления вью модели с fullName убрать-->
+        {{post.isAnonymous ? post?.author?.fullName : post?.author?.lastName}}
       </div>
       <div class="post-header__time">
         {{post.publishDate | date}}

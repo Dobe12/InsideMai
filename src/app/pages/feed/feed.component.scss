@@ -1,5 +1,5 @@
 .feed__container {
-  width: 650px;
+  width: var(--post-width);
   height: 23300px;
   display: flex;
   flex-direction: column;

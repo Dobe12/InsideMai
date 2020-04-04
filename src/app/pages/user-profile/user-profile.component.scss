@@ -2,16 +2,15 @@
   margin-top: 10px;
   font-family: ysans,Arial,sans-serif;
   .user-profile__user-info {
-    width: 650px;
+    width: var(--post-width);
     height: 200px;
     background-color: white;
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 5px 15px rgba(139,160,176,0.5);
+    box-shadow: var(--shadow);
     border-radius: 15px;
     overflow: hidden;
-
   }
 
   .user-profile__header {
@@ -53,7 +52,7 @@
       font-family: ysans, Arial, sans-serif;
       text-decoration: none;
       font-size: 13pt;
-      background-color: rgba(0, 175, 250, 0.67);
+      background-color: var(--mar-color-lighter);
       padding: 5px 20px;
       border-radius: 25px;
     }

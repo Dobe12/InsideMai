@@ -36,6 +36,7 @@ import {JwtInterceptor} from "./core/interceptros/jwt.interceptor";
 import { CreatePostComponent } from './pages/create-post/create-post.component';
 import {MatInputModule} from "@angular/material/input";
 import {MarkdownModule} from "ngx-markdown";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import {MarkdownModule} from "ngx-markdown";
     FormsModule,
     JwtModule,
     MatInputModule,
+    MatCheckboxModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},

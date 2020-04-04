@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {removeElementFromHtml} from "@angular/material/schematics/ng-update/upgrade-rules/hammer-gestures-v9/remove-element-from-html";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {PostsService} from "../../core/services/posts.service";
 import {Router} from "@angular/router";
@@ -25,6 +25,7 @@ export class CreatePostComponent implements OnInit {
     this.createPostForm = this.fb.group(
       {
         title: [''],
+        isAnonymous: new FormControl(false),
         content: ['', Validators.required]
       });
   }

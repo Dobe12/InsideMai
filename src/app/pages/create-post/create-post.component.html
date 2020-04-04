@@ -1,3 +1,4 @@
+<link href="https://fonts.googleapis.com/css?family=Jura&display=swap" rel="stylesheet">
 <div class="create-post__container">
   <h2 class="create-post__title" >Создать пост</h2>
   <form
@@ -20,11 +21,17 @@
             min_height: 400
           }">
     </editor>
-    <button class="create-post__button">
-      Создать
-    </button>
+    <div class="create-post__footer">
+        <mat-checkbox v
+          class="create-post__anon"
+          formControlName="isAnonymous">
+        Анонимно
+      </mat-checkbox>
+      <button class="create-post__button">
+        Создать
+      </button>
+    </div>
   </form>
-
 </div>
 
 

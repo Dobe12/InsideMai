@@ -11,5 +11,9 @@ export class PostComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    if (this.post.isAnonymous) {
+      this.post.author.fullName = "Анонимно";
+      this.post.author.userPic = 'assets/images/defaultUserPic.png';
+    }
   }
 }
