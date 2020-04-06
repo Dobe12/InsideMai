@@ -9,7 +9,8 @@
     <div class="header__profile">
       <app-profile *ngIf="!auth.isLoggedIn()" [routerLink]="['/login']"></app-profile>
       <div *ngIf="auth.isLoggedIn()">
-        <p>{{ auth.currentUserValue?.firstName}}</p>
+        <a  [routerLink] = "['/user', auth.currentUserValue?.id]">{{ auth.currentUserValue?.firstName}}</a>
+        <br>
         <a class="pointer"
          (click)="auth.logout()"
          [routerLink]="['/login']">

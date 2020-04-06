@@ -1,8 +1,9 @@
 <div class="user-profile__container">
   <div class="user-profile__user-info">
     <div class="user-profile__header">
-      <div class="user-profile__pic">
-        <img src="https://i.pinimg.com/originals/06/2d/0c/062d0cb00faf1879c6474b5d43cde923.jpg">
+      <div class="user-profile__pic" (click)="fileInput.click()">
+        <input class="user-profile__pic-upload" id="fileInput" #fileInput type='file' (change)="onSelectFile($event)">
+        <img [src]="user?.userPic">
       </div>
     </div>
     <div class="user-profile__name">{{user?.firstName}} {{user?.lastName}}</div>

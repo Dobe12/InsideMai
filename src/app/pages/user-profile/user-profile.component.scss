@@ -1,3 +1,4 @@
+
 .user-profile__container {
   margin-top: 10px;
   font-family: ysans,Arial,sans-serif;
@@ -27,6 +28,34 @@
       position: absolute;
       top: 50%;
       left: 5%;
+
+      &:hover:before {
+        position: absolute;
+        left: 35%;
+        top: 35%;
+        background: url("../../../assets/images/add_a_photo-black-18dp.svg") no-repeat center;
+        content: "";
+        height: 30px;
+        width: 30px;
+        background-size: 100%;
+
+      }
+
+      &:hover:after {
+        transition-delay: 0.02s;
+        background-color:rgba(255, 255, 255, 0.5);
+        align-content: center;
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .user-profile__pic-upload {
+        display: none;
+      }
 
       img {max-width:100%;height:auto;}
     }
