@@ -4,7 +4,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {PostsService} from "../../core/services/posts.service";
 import {Router} from "@angular/router";
-import {HttpResponse} from "@angular/common/http";
+
 
 @Component({
   selector: 'app-create-post',
@@ -48,3 +48,4 @@ export class CreatePostComponent implements OnInit {
   }
 
 }
+

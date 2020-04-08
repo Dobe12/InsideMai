@@ -1,9 +1,9 @@
 <div class="new-comment__container">
   <div class="new-comment__user-photo"><img src="https://i.pinimg.com/originals/06/2d/0c/062d0cb00faf1879c6474b5d43cde923.jpg"></div>
   <div class="new-comment__content">
-    <textarea autosize class="new-comment__text" placeholder="Введите комментарий"></textarea>
+    <textarea autosize class="new-comment__text" placeholder="Введите комментарий" #text></textarea>
   </div>
-  <div class="new-comment__sender">
+  <div class="new-comment__sender"  (click)="addComment(text.value)">
     <i class="material-icons">
       send
     </i>

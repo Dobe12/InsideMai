@@ -1,9 +1,10 @@
 <div class="feed__container">
   <div class="feed__navigate">
     <div class="feed__levels">
-      <div class="nav-btn font-size-10 ">Все</div>
-      <div class="nav-btn font-size-10 ">Институт</div>
-      <div class="nav-btn font-size-10 ">Кафедра</div>
+      <div class="nav-btn font-size-10" (click)="getAllPosts()">Все</div>
+      <div class="nav-btn font-size-10" (click)="getUniversityPosts()">Институт</div>
+      <div class="nav-btn font-size-10" (click)="getDepartmentPosts()">Кафедра</div>
+      <div class="nav-btn font-size-10" (click)="getGroupPosts()">Группа</div>
     </div>
     <div class="feed__sort">
       <div class="feed__srot-term">новое</div>

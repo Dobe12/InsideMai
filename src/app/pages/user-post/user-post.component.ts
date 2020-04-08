@@ -5,6 +5,7 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
 import {mergeMap} from "rxjs/operators";
 import {forkJoin} from "rxjs";
 import {Comment} from "../../core/models/comment";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-user-post',
@@ -16,7 +17,8 @@ export class UserPostComponent implements OnInit {
   post: Post;
   postComments: Comment[];
   constructor(private postsService: PostsService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.route.paramMap.pipe(mergeMap((param: ParamMap) => {
@@ -29,7 +31,19 @@ export class UserPostComponent implements OnInit {
     })).subscribe(result => {
       this.post = result[0] as Post;
       this.postComments = result[1] as Comment[];
+      console.log(this.postComments);
+
+    });
+
+  }
+
+  addComment(comment: Comment) {
+    this.postsService.addCommentOnPost(this.post.id, comment).subscribe(res => {
+      this.postComments.push(res as Comment);
+      this.post.commentsCount++;
+      this.toastr.success("Комментарий добавлен");
     });
   }
+
 
 }

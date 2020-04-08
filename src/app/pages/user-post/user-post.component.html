@@ -9,7 +9,7 @@
       *ngFor="let comment of postComments"
       [comment]="comment">
     </app-comment>
-    <app-new-comment-form></app-new-comment-form>
+    <app-new-comment-form (addedComment)="addComment($event)"></app-new-comment-form>
   </div>
   <div class="user-post__add-comment"></div>
 </div>

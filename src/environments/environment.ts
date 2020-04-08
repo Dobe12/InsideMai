@@ -4,7 +4,12 @@
 
 export const environment = {
   production: false,
-  api_url: 'https://localhost:44384/api/'
+  api_url: 'https://localhost:44384/api/',
+
+  MaiLvl: 1,
+  UniversityLvl: 2,
+  DepartmentLvl: 3,
+  GroupLvl: 4
 };
 
 /*
