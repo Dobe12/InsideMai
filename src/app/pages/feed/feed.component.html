@@ -1,10 +1,26 @@
 <div class="feed__container">
   <div class="feed__navigate">
     <div class="feed__levels">
-      <div class="nav-btn font-size-10" (click)="getAllPosts()">Все</div>
-      <div class="nav-btn font-size-10" (click)="getUniversityPosts()">Институт</div>
-      <div class="nav-btn font-size-10" (click)="getDepartmentPosts()">Кафедра</div>
-      <div class="nav-btn font-size-10" (click)="getGroupPosts()">Группа</div>
+      <a class="nav-btn font-size-10"
+           [class.nav-btn-active]="departmentLevel === 'mai'"
+           (click)="setFilter(DepartmentLevels.Mai)">
+        Все
+      </a>
+      <a class="nav-btn font-size-10"
+           [class.nav-btn-active]="departmentLevel === 'university'"
+           (click)="setFilter(DepartmentLevels.University)">
+        Институт
+      </a>
+      <a class="nav-btn font-size-10"
+           [class.nav-btn-active]="departmentLevel === 'department'"
+           (click)="setFilter(DepartmentLevels.Department)">
+        Кафедра
+      </a>
+      <a class="nav-btn font-size-10"
+           [class.nav-btn-active]="departmentLevel === 'group'"
+           (click)="setFilter(DepartmentLevels.Group)">
+        Группа
+      </a>
     </div>
     <div class="feed__sort">
       <div class="feed__srot-term">новое</div>
@@ -12,7 +28,7 @@
       <div class="feed__srot-term">интересное</div>
     </div>
   </div>
-  <div class="feed__posts" *ngFor="let post of posts">
+  <div class="feed__posts" *ngFor="let post of postsService.posts | async">
     <app-post [post]="post"></app-post>
   </div>
 </div>

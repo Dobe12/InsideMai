@@ -31,7 +31,6 @@ export class UserPostComponent implements OnInit {
     })).subscribe(result => {
       this.post = result[0] as Post;
       this.postComments = result[1] as Comment[];
-      console.log(this.postComments);
 
     });
 

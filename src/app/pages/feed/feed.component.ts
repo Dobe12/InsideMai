@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PostsService} from "../../core/services/posts.service";
-import {Post} from "../../core/models/post";
+import {DepartmentLevels, Post, PostType} from "../../core/models/post";
 import {AuthService} from "../../core/auth/auth.service";
-import {environment} from "../../../environments/environment";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-feed',
@@ -11,37 +11,31 @@ import {environment} from "../../../environments/environment";
 })
 export class FeedComponent implements OnInit {
   @Input() posts: Post[];
-  constructor(private postsService: PostsService,
-              private authService: AuthService) { }
+  DepartmentLevels = DepartmentLevels;
+  constructor(public postsService: PostsService,
+              private authService: AuthService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getAllPosts();
+    this.postsService.type = DepartmentLevels.Mai;
+    this.postsService.departmentLevel = PostType.All;
+    this.postsService.applyFilters();
   }
 
-  getAllPosts() {
-    this.postsService.getAll().subscribe(posts => {
-      this.posts = posts as Post[];
+  postsFilter() {
+    this.postsService.getPostsByType(PostType.Advert).subscribe(res => {
+      this.posts = res as Post[];
     });
+    console.log('wtf');
   }
 
-  getUniversityPosts() {
-    this.getPostsByLvl(environment.UniversityLvl);
+  setFilter(filter: DepartmentLevels) {
+    this.postsService.departmentLevel = filter;
+    this.postsService.applyFilters();
   }
 
-  getDepartmentPosts() {
-    this.getPostsByLvl(environment.DepartmentLvl);
+  get departmentLevel() {
+    return DepartmentLevels[this.postsService.departmentLevel].toLowerCase();
   }
-
-  getGroupPosts() {
-    this.getPostsByLvl(environment.GroupLvl);
-  }
-
-  private getPostsByLvl(lvl) {
-    this.postsService.getPostsDepartmentByLevel(this.authService.currentUserValue.department.id, lvl)
-      .subscribe(result => {
-        this.posts = result as Post[];
-      });
-}
-
 
 }

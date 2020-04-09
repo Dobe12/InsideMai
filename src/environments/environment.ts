@@ -6,11 +6,21 @@ export const environment = {
   production: false,
   api_url: 'https://localhost:44384/api/',
 
+  // Levels
   MaiLvl: 1,
   UniversityLvl: 2,
   DepartmentLvl: 3,
-  GroupLvl: 4
+  GroupLvl: 4,
+
+  // PostTypes
+  AllPosts: 1,
+  Question: 2,
+  Article: 3,
+  Advert: 4,
+  Event: 5
 };
+
+
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -79,6 +79,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
           {path: '', component: FeedComponent},
           {path: 'post/:id', component: UserPostComponent},
           {path: 'user/:id', component: UserProfileComponent},
+          {path: ':type/:level', component: FeedComponent },
           {path: 'create', component: CreatePostComponent}
         ]
       }

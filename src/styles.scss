@@ -34,7 +34,22 @@ body {
   padding: 8px;
   cursor: pointer;
 }
+
+.nav-btn-active {
+  align-self: flex-start;
+  background-color: rgba(214, 224, 236, 0.72);
+  border-radius: 20px;
+  color: var(--mai-color);
+  font-family: ysans,Arial,sans-serif;
+  text-decoration: none;
+  margin-bottom: 5px;
+  font-size: 13pt;
+  padding: 8px;
+  cursor: pointer;
+}
+
 .nav-btn:hover {
+  align-self: flex-start;
   background-color: rgba(214, 224, 236, 0.72);
   border-radius: 20px;
   color: rgba(1, 0, 0, 0.91);

@@ -44,7 +44,6 @@ export class UserProfileComponent implements OnInit {
       reader.onload = (event) => {
         const updatedUser = this.user;
         updatedUser.userPic = event.target.result as string;
-        console.log(updatedUser.userPic );
 
         this.usersService.update(updatedUser).subscribe(result => {
           this.toastr.success("Фотография изменена");
