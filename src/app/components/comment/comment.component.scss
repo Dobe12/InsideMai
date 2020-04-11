@@ -3,6 +3,9 @@
   font-family: ysans,Arial,sans-serif;
   padding: 10px 20px 0 20px;
 
+  .comment__user-name {
+    cursor: pointer;
+  }
 
   .comment__user-photo {
     border-radius: 50%;

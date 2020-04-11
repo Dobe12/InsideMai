@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Comment} from "../../core/models/comment";
+import {AuthService} from "../../core/auth/auth.service";
 
 @Component({
   selector: 'app-new-comment-form',
@@ -8,7 +9,7 @@ import {Comment} from "../../core/models/comment";
 })
 export class NewCommentFormComponent implements OnInit {
   @Output() addedComment = new EventEmitter();
-  constructor() { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit(): void {
   }
