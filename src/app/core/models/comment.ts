@@ -7,4 +7,5 @@ export class Comment {
   likesCount: number;
   commentsCount: number;
   author: User;
+  likedByCurrentUser: boolean;
 }

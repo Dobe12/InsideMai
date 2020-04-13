@@ -13,6 +13,8 @@ export interface  Post {
   author: User;
   department: Department;
   Type: PostType;
+  likedByCurrentUser: boolean;
+  addedToFavByCurrentUser: boolean;
 }
 
 export enum PostType {

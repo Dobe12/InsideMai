@@ -10,10 +10,12 @@
     font-size: 14px;
     padding-left: 3px;
     color: inherit;
-
   }
 }
 
+.isLiked {
+  color: var(--red);
+}
 .like__container:hover {
   color: var(--red);
 }

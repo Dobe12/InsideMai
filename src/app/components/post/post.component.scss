@@ -91,6 +91,10 @@ $ico-color: gray;
 
     .event-actions__favorite {
       margin-left: 20px;
+
+      &.active {
+        color: var(--red);
+      }
     }
     .event-actions_flex {
       display: flex;

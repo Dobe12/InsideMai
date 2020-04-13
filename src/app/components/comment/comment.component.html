@@ -11,7 +11,13 @@
     <div class="comment__text">{{comment.content}}</div>
     <div class="comment__footer">
       <div class="comment__like">
-        <app-like [likesCount]="comment.likesCount"></app-like>
+        <app-like
+          [likesCount]="comment.likesCount"
+          (click)="switchLike(comment)"
+          [isLiked]="comment.likedByCurrentUser"
+          [likesCount]="comment.likesCount">
+        >
+        </app-like>
       </div>
     </div>
   </div>

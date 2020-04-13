@@ -37,12 +37,17 @@
         error
       </i>
     </div>
-    <div class="event-actions__favorite event-actions_flex pointer color">
+    <div class="event-actions__favorite event-actions_flex pointer color"
+         [class.active]="post.addedToFavByCurrentUser"
+         (click)="switchFav(post)"
+    >
       <i class="material-icons">
         bookmark
       </i>
     </div>
     <app-like
+      (click)="switchLike(post)"
+      [isLiked]="post.likedByCurrentUser"
       [likesCount]="post.likesCount">
     </app-like>
   </div>
