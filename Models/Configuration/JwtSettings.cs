@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InsideMaiWebApi.Models.Configuration
+namespace InsideMai.Models.Configuration
 {
     public class JwtSettings
     {

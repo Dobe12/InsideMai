@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using InsideMaiWebApi.Data;
-using InsideMaiWebApi.Models;
+using InsideMai.Data;
+using InsideMai.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace InsideMaiWebApi.StartupExtensions
+namespace InsideMai.StartupExtensions
 {
     public static class ServiceCollectionExtensions
     {

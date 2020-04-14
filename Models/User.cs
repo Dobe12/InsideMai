@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 
-namespace InsideMaiWebApi.Models
+namespace InsideMai.Models
 {
     public class User : IdentityUser<int>
     {

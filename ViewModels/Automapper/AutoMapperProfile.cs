@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using InsideMaiWebApi.Models;
+using InsideMai.Models;
 
-namespace InsideMaiWebApi.ViewModels.AutoMapperProfile
+namespace InsideMai.ViewModels.AutoMapperProfile
 {
     public class AutoMapperProfile : Profile
     {

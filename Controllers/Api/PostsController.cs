@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using AutoMapper;
-using InsideMaiWebApi.Data;
-using InsideMaiWebApi.Models;
-using InsideMaiWebApi.Services;
-using InsideMaiWebApi.ViewModels;
+using InsideMai.Data;
+using InsideMai.Models;
+using InsideMai.Services;
+using InsideMai.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace InsideMaiWebApi.Controllers.Api
+namespace InsideMai.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -51,10 +48,6 @@ namespace InsideMaiWebApi.Controllers.Api
             }
         }
 
-        /// <summary>
-        /// Get all posts form DataBase
-        /// </summary>
-        /// <returns>All posts from DataBase</returns>
         [HttpGet]
         public async Task<IActionResult> GetAllPosts()
         {
@@ -63,10 +56,6 @@ namespace InsideMaiWebApi.Controllers.Api
             return Ok(_mapper.Map<List<PostViewModel>>(posts));
         }
 
-        /// <summary>
-        /// Get all posts form DataBase by likes
-        /// </summary>
-        /// <returns>All posts from DataBase</returns>
         [HttpGet("all/like")]
         public async Task<IActionResult> GetAllPostsByLikes()
         {
@@ -74,13 +63,11 @@ namespace InsideMaiWebApi.Controllers.Api
 
             var result = posts.OrderByDescending(p => p.PostLikes);
 
-            return Ok(_mapper.Map<List<PostViewModel>>(result));
+            var viewModel = _mapper.Map<List<PostViewModel>>(result);
+
+            return Ok(viewModel);
         }
 
-        /// <summary>
-        /// Get posts by department level and type
-        /// </summary>
-        /// <returns> posts by department level and type</returns>
         [HttpGet("filter/{type}/{departmentLevel}")]
         public async Task<IActionResult> GetFilteredPosts([FromRoute] int type, [FromRoute] int departmentLevel)
         {
@@ -140,10 +127,6 @@ namespace InsideMaiWebApi.Controllers.Api
             }
         }
 
-        /// <summary>
-        /// Get posts from DataBase by type
-        /// </summary>
-        /// <returns>Posts from DataBase by type</returns>
         [HttpGet("type/{id}")]
         public async Task<IActionResult> GetPostsByType([FromRoute] PostType type)
         {
@@ -154,10 +137,6 @@ namespace InsideMaiWebApi.Controllers.Api
             return Ok(_mapper.Map<List<PostViewModel>>(result));
         }
 
-        /// <summary>
-        /// Get Department posts form DataBase by likes
-        /// </summary>
-        /// <returns>Deparment posts from DataBase</returns>
         [HttpGet("all/like")]
         public async Task<IActionResult> GetDeparmentPostsByLikes([FromRoute] int id)
         {
@@ -165,14 +144,11 @@ namespace InsideMaiWebApi.Controllers.Api
 
             var result = posts.OrderByDescending(p => p.PostLikes);
 
-            return Ok(_mapper.Map<List<PostViewModel>>(result));
+            var viewModel = _mapper.Map<List<PostViewModel>>(result);
+
+            return Ok(viewModel);
         }
 
-
-        /// <summary>
-        /// Get post by id
-        /// </summary>
-        /// <returns>post by id</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPostsById([FromRoute] int id)
         {
@@ -189,10 +165,6 @@ namespace InsideMaiWebApi.Controllers.Api
             return Ok(viewModel);
         }
 
-        /// <summary>
-        /// Get comments by post id
-        /// </summary>
-        /// <returns>comments by post id</returns>
         [HttpGet("{id}/comments")]
         public async Task<IActionResult> GetComments([FromRoute] int id)
         {
@@ -221,23 +193,16 @@ namespace InsideMaiWebApi.Controllers.Api
             }
         }
 
-        /// <summary>
-        /// Get user's posts
-        /// </summary>
-        /// <returns>user's posts</returns>
         [HttpGet("user/{userid}")]
         public async Task<IActionResult> GetPostsByUser([FromRoute] int userId)
         {
             var posts = await AllPosts.Where(p => p.Author.Id == userId).ToListAsync();
 
-            return Ok(_mapper.Map<List<PostViewModel>>(posts));
+            var viewModel = _mapper.Map<List<PostViewModel>>(posts);
+
+            return Ok(viewModel);
         }
 
-
-        /// <summary>
-        /// Delete post
-        /// </summary>
-        /// <returns>user's posts</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePost([FromRoute] int id)
         {
@@ -255,10 +220,6 @@ namespace InsideMaiWebApi.Controllers.Api
             return Ok();
         }
 
-        /// <summary>
-        /// Get N posts after id post
-        /// </summary>
-        /// <returns>posts from id to id + N posts</returns>
         [HttpGet("{startId}/{count}")]
         public async Task<IActionResult> GetSomePosts([FromRoute] int startId, [FromRoute] int count)
         {
@@ -268,10 +229,6 @@ namespace InsideMaiWebApi.Controllers.Api
         }
 
         //Доработать, не работает!!!!
-        /// <summary>
-        /// Get post by title
-        /// </summary>
-        /// <returns>searched post by title</returns>
         [HttpGet("search/{terms}")]
         public async Task<IActionResult> GetPostByTitle([FromRoute] string terms)
         {
@@ -289,12 +246,11 @@ namespace InsideMaiWebApi.Controllers.Api
                 return BadRequest("Пост не найден");
             }
 
-            return Ok(_mapper.Map<List<PostViewModel>>(posts));
+            var viewModel = _mapper.Map<List<PostViewModel>>(posts);
+
+            return Ok(viewModel);
         }
 
-        /// <summary>
-        /// Add new post
-        /// </summary>
         [HttpPost]
         public async Task<IActionResult> AddPost([FromBody] Post post)
         {
@@ -316,10 +272,6 @@ namespace InsideMaiWebApi.Controllers.Api
             return Ok();
         }
 
-        /// <summary>
-        /// Adds comment to post.
-        /// </summary>
-        /// <returns>New comment</returns>
         [HttpPost("{id}/addComment")]
         public async Task<IActionResult> AddComment([FromRoute] int id, [FromBody] Comment comment)
         {
@@ -342,12 +294,11 @@ namespace InsideMaiWebApi.Controllers.Api
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
 
-            return Ok(_mapper.Map<CommentViewModel>(comment));
+            var viewModel = _mapper.Map<CommentViewModel>(comment);
+
+            return Ok(viewModel);
         }
 
-        /// <summary>
-        /// Like the Post.
-        /// </summary>
         [HttpPost("{id}/like")]
         public async Task<IActionResult> LikePost([FromRoute] int id)
         {
@@ -373,9 +324,6 @@ namespace InsideMaiWebApi.Controllers.Api
             return Ok();
         }
 
-        /// <summary>
-        /// Remove like from the post.
-        /// </summary>
         [HttpDelete("{id}/like")]
         public async Task<IActionResult> RemoveLike([FromRoute] int id)
         {
@@ -394,15 +342,11 @@ namespace InsideMaiWebApi.Controllers.Api
             post.LikesCount--;
 
             _context.Update(post);
-
             await _context.SaveChangesAsync();
 
             return Ok();
         }
 
-        /// <summary>
-        /// Favorite the Post.
-        /// </summary>
         [HttpPost("{id}/fav")]
         public async Task<IActionResult> FavoritePost([FromRoute] int id)
         {
@@ -428,9 +372,6 @@ namespace InsideMaiWebApi.Controllers.Api
             return Ok();
         }
 
-        /// <summary>
-        /// Remove favorite from the post.
-        /// </summary>
         [HttpDelete("{id}/fav")]
         public async Task<IActionResult> RemoveFavorite([FromRoute] int id)
         {

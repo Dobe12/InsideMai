@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using InsideMaiWebApi.Data;
-using InsideMaiWebApi.Models;
-using InsideMaiWebApi.Services;
+using InsideMai.Data;
+using InsideMai.Models;
+using InsideMai.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace InsideMaiWebApi.Controllers.Api
+namespace InsideMai.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -20,8 +18,6 @@ namespace InsideMaiWebApi.Controllers.Api
         private readonly InsideMaiContext _context;
         private readonly CurrentUser _currentUser;
         private readonly UserManager<User> _userManager;
-
-
         public DepartmentsController(InsideMaiContext context, CurrentUser currentUser,
             UserManager<User> userManager)
         {
@@ -39,10 +35,6 @@ namespace InsideMaiWebApi.Controllers.Api
             }
         }
 
-        /// <summary>
-        /// Get all departments form DataBase
-        /// </summary>
-        /// <returns>All departments from DataBase</returns>
         [HttpGet("all")]
         public async Task<IActionResult> GetAllPosts()
         {
@@ -51,9 +43,6 @@ namespace InsideMaiWebApi.Controllers.Api
             return Ok(departments);
         }
 
-        /// <summary>
-        /// Add new department
-        /// </summary>
         [HttpPost("all/{parentId}")]
         public async Task<IActionResult> AddNewDepartment([FromBody] Department department)
         {
@@ -73,11 +62,6 @@ namespace InsideMaiWebApi.Controllers.Api
             return Ok(department);
         }
 
-        /// <summary>
-        /// Get department by id
-        /// </summary>
-        /// <returns>department</returns>
-        /// 
         [HttpGet("{id}")]
         public async Task<IActionResult> AddNewDepartment([FromRoute] int id)
         {
@@ -97,12 +81,6 @@ namespace InsideMaiWebApi.Controllers.Api
             return Ok(result);
         }
 
-
-
-        /// <summary>
-        /// Delete department
-        /// </summary>
-        /// <returns>status</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletDeleteDepartmentePost([FromRoute] int id)
         {

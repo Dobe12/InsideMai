@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using InsideMaiWebApi.Data;
-using InsideMaiWebApi.Models;
+using InsideMai.Data;
+using InsideMai.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
-namespace InsideMaiWebApi.Services
+namespace InsideMai.Services
 {
     public class CurrentUser
     {

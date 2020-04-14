@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using InsideMaiWebApi.Data;
-using InsideMaiWebApi.Models;
-using InsideMaiWebApi.Services;
-using InsideMaiWebApi.ViewModels;
+using InsideMai.Data;
+using InsideMai.Models;
+using InsideMai.Services;
+using InsideMai.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace InsideMaiWebApi.Controllers.Api
+namespace InsideMai.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -24,8 +21,6 @@ namespace InsideMaiWebApi.Controllers.Api
         private readonly CurrentUser _currentUser;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
-
-
         public CommentsController(InsideMaiContext context, CurrentUser currentUser,
             UserManager<User> userManager, IMapper mapper)
         {
@@ -34,7 +29,6 @@ namespace InsideMaiWebApi.Controllers.Api
             _userManager = userManager;
             _mapper = mapper;
         }
-
         private IQueryable<Comment> AllComments
         {
             get
@@ -46,7 +40,6 @@ namespace InsideMaiWebApi.Controllers.Api
             }
         }
 
-        // DELETE: api/Comments/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteComment([FromRoute] int id)
         {
@@ -60,10 +53,11 @@ namespace InsideMaiWebApi.Controllers.Api
             comment.IsDeleted = true;
             await _context.SaveChangesAsync();
 
-            return Ok(_mapper.Map<CommentViewModel>(comment));
+            var viewModel = _mapper.Map<CommentViewModel>(comment);
+
+            return Ok(viewModel);
         }
 
-        //edit comment
         [HttpPost("{id}/edit")]
         public async Task<IActionResult> EditComment([FromRoute] int id, [FromBody] Comment comment)
         {
@@ -77,7 +71,9 @@ namespace InsideMaiWebApi.Controllers.Api
             _context.Comments.Update(comment);
             await _context.SaveChangesAsync();
 
-            return Ok(_mapper.Map<CommentViewModel>(comment));
+            var viewModel = _mapper.Map<CommentViewModel>(comment);
+
+            return Ok(viewModel);
         }
 
         private async Task<bool> CheckRights(Comment comment)
@@ -95,9 +91,6 @@ namespace InsideMaiWebApi.Controllers.Api
             return false;
         }
 
-        /// <summary>
-        /// Like the comment.
-        /// </summary>
         [HttpPost("{id}/like")]
         public async Task<IActionResult> LikeComment([FromRoute] int id)
         {
@@ -118,14 +111,11 @@ namespace InsideMaiWebApi.Controllers.Api
             comment.LikesCount++;
             
             _context.Update(comment);
-
             await _context.SaveChangesAsync();
+
             return Ok();
         }
 
-        /// <summary>
-        /// Removes like from the comment.
-        /// </summary>
         [HttpDelete("{id}/like")]
         public async Task<IActionResult> RemoveLike([FromRoute] int id)
         {
@@ -141,7 +131,6 @@ namespace InsideMaiWebApi.Controllers.Api
 
             var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
 
-
             _context.UserCommentLikes.Remove(like);
             comment.LikesCount--;
             
@@ -150,7 +139,6 @@ namespace InsideMaiWebApi.Controllers.Api
 
             return Ok();
         }
-
 
         private Task<bool> CommentExists(int id)
         {

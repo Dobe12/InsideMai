@@ -5,17 +5,18 @@ using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using AutoMapper;
-using InsideMaiWebApi.Data;
-using InsideMaiWebApi.Models;
-using InsideMaiWebApi.Services;
-using InsideMaiWebApi.ViewModels;
+using InsideMai.Data;
+using InsideMai.Models;
+using InsideMai.Services;
+using InsideMai.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace InsideMaiWebApi.Controllers.Api
+namespace InsideMai.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -27,7 +28,6 @@ namespace InsideMaiWebApi.Controllers.Api
         private readonly UserManager<User> _userManager;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IMapper _mapper;
-
 
         public UsersController(InsideMaiContext context, CurrentUser currentUser,
             UserManager<User> userManager, IWebHostEnvironment hostEnvironment, IMapper mapper)
@@ -48,22 +48,16 @@ namespace InsideMaiWebApi.Controllers.Api
             }
         }
 
-        /// <summary>
-        /// Get all users form DataBase
-        /// </summary>
-        /// <returns>All users from DataBase</returns>
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
             var users = await AllUsers.ToArrayAsync();
 
-            return Ok(_mapper.Map<List<UserViewModel>>(users));
+            var viewModel = _mapper.Map<List<UserViewModel>>(users);
+
+            return Ok(viewModel);
         }
 
-        /// <summary>
-        /// Get user by id
-        /// </summary>
-        /// <returns>user by Id</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser([FromRoute] int id)
         {
@@ -75,13 +69,11 @@ namespace InsideMaiWebApi.Controllers.Api
                 return BadRequest("Пользователь не найден");
             }
 
-            return Ok(_mapper.Map<UserViewModel>(result));
+            var viewModel = _mapper.Map<UserViewModel>(result);
+
+            return Ok(viewModel);
         }
 
-        /// <summary>
-        /// Get user by Email
-        /// </summary>
-        /// <returns>user by Email</returns>
         [HttpGet("{id}/email")]
         public async Task<IActionResult> SearchUser([FromRoute] string email)
         {
@@ -93,13 +85,11 @@ namespace InsideMaiWebApi.Controllers.Api
                 return BadRequest("Пользователь не найден");
             }
 
-            return Ok(_mapper.Map<UserViewModel>(result));
+            var viewModel = _mapper.Map<UserViewModel>(result);
+
+            return Ok(viewModel);
         }
 
-        /// <summary>
-        /// Get users by Department
-        /// </summary>
-        /// <returns>users by Department</returns>
         [HttpGet("{departmentId}/department")]
         public async Task<IActionResult> UsersByDepartment([FromRoute] int departmentId)
         {
@@ -111,12 +101,11 @@ namespace InsideMaiWebApi.Controllers.Api
             var users = await AllUsers.ToArrayAsync();
             var result = users.Where(u => u.Department.Id == departmentId);
 
-            return Ok(_mapper.Map<UserViewModel>(result));
+            var viewModel = _mapper.Map<UserViewModel>(result);
+
+            return Ok(viewModel);
         }
 
-        /// <summary>
-        /// Delete user
-        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
@@ -135,13 +124,11 @@ namespace InsideMaiWebApi.Controllers.Api
             user.IsDeleted = true;
             await _context.SaveChangesAsync();
 
-            return Ok(_mapper.Map<UserViewModel>(user));
+            var viewModel = _mapper.Map<UserViewModel>(user);
+
+            return Ok(viewModel);
         }
 
-        /// <summary>
-        /// Change user information
-        /// </summary>
-        /// <returns>current User</returns>
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateUser([FromRoute] int id, [FromBody] User user)
         {
@@ -170,7 +157,9 @@ namespace InsideMaiWebApi.Controllers.Api
             _context.Users.Update(currentUser);
             await _context.SaveChangesAsync();
 
-            return Ok(_mapper.Map<UserViewModel>(user));
+            var viewModel = _mapper.Map<UserViewModel>(user);
+
+            return Ok(viewModel);
         }
 
         private string UploadUserPic(string base64Img)
@@ -188,8 +177,8 @@ namespace InsideMaiWebApi.Controllers.Api
                     stream.Write(imageBytes, 0, imageBytes.Length);
                     stream.Flush();
                 }
-                //убрать хардкод, когда солью
-                return "https://localhost:44350/" + picName;
+
+                return picName;
             }
 
             return String.Empty;

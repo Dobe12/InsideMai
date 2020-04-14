@@ -1,9 +1,9 @@
 using System;
 using System.Text;
 using AutoMapper;
-using InsideMaiWebApi.Models.Configuration;
-using InsideMaiWebApi.Services;
-using InsideMaiWebApi.StartupExtensions;
+using InsideMai.Models.Configuration;
+using InsideMai.Services;
+using InsideMai.StartupExtensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

@@ -4,18 +4,18 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using InsideMaiWebApi.Data;
-using InsideMaiWebApi.Models;
-using InsideMaiWebApi.Models.Configuration;
-using InsideMaiWebApi.Services;
-using InsideMaiWebApi.ViewModels;
+using InsideMai.Data;
+using InsideMai.Models;
+using InsideMai.Models.Configuration;
+using InsideMai.Services;
+using InsideMai.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace InsideMaiWebApi.Controllers.Api
+namespace InsideMai.Controllers.Api
 {
     [Route("api/[controller]")]
     public class AccountController : Controller
@@ -26,8 +26,6 @@ namespace InsideMaiWebApi.Controllers.Api
         private readonly InsideMaiContext _context;
         private readonly CurrentUser _currentUser;
         private readonly IOptions<JwtSettings> _jwtSettings;
-
-
 
         public AccountController(UserManager<User> userManager, InsideMaiContext context, IOptions<JwtSettings> jwtSettings, SignInManager<User> signInManager, CurrentUser currentUser)
         {

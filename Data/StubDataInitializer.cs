@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using InsideMaiWebApi.Models;
+using InsideMai.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace InsideMaiWebApi.Data
+namespace InsideMai.Data
 {
     public static class StubDataInitializer
     {
@@ -42,7 +42,8 @@ namespace InsideMaiWebApi.Data
                     EmailConfirmed = true,
                     LockoutEnabled = true,
                     PhoneNumberConfirmed = true,
-                    TwoFactorEnabled = true
+                    TwoFactorEnabled = true,
+                    UserPic = "09822d45-28db-4189-8125-a12dd0d8e5d2.png"
                 },
                 new
                 {
@@ -55,7 +56,8 @@ namespace InsideMaiWebApi.Data
                     EmailConfirmed = true,
                     LockoutEnabled = true,
                     PhoneNumberConfirmed = true,
-                    TwoFactorEnabled = true
+                    TwoFactorEnabled = true,
+                    UserPic = "09822d45-28db-4189-8125-a12dd0d8e5d2.png"
                 },
                 new
                 {
@@ -70,7 +72,8 @@ namespace InsideMaiWebApi.Data
                     EmailConfirmed = true,
                     LockoutEnabled = true,
                     PhoneNumberConfirmed = true,
-                    TwoFactorEnabled = true
+                    TwoFactorEnabled = true,
+                    UserPic = "09822d45-28db-4189-8125-a12dd0d8e5d2.png"
                 },
                 new
                 {
@@ -85,7 +88,8 @@ namespace InsideMaiWebApi.Data
                     EmailConfirmed = true,
                     LockoutEnabled = true,
                     PhoneNumberConfirmed = true,
-                    TwoFactorEnabled = true
+                    TwoFactorEnabled = true,
+                    UserPic = "0292ef25-04b0-474b-8551-9610ef744416.png"
                 },
                 new
                 {
@@ -100,7 +104,8 @@ namespace InsideMaiWebApi.Data
                     EmailConfirmed = true,
                     LockoutEnabled = true,
                     PhoneNumberConfirmed = true,
-                    TwoFactorEnabled = true
+                    TwoFactorEnabled = true,
+                    UserPic = "0292ef25-04b0-474b-8551-9610ef744416.png"
                 },
                 new
                 {
@@ -115,7 +120,8 @@ namespace InsideMaiWebApi.Data
                     EmailConfirmed = true,
                     LockoutEnabled = true,
                     PhoneNumberConfirmed = true,
-                    TwoFactorEnabled = true
+                    TwoFactorEnabled = true,
+                    UserPic = "0292ef25-04b0-474b-8551-9610ef744416.png"
                 },
                 new
                 {
@@ -129,7 +135,8 @@ namespace InsideMaiWebApi.Data
                     EmailConfirmed = true,
                     LockoutEnabled = true,
                     PhoneNumberConfirmed = true,
-                    TwoFactorEnabled = true
+                    TwoFactorEnabled = true,
+                    UserPic = "0292ef25-04b0-474b-8551-9610ef744416.png"
                 });
         }
 
