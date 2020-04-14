@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api_url: 'https://localhost:44384/api/',
+    api_url: 'https://localhost:44350/api/',
 
   // Levels
   MaiLvl: 1,
