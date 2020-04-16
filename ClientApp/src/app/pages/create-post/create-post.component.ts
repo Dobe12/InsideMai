@@ -15,7 +15,12 @@ export class CreatePostComponent implements OnInit {
   markdown: any;
   createPostForm: FormGroup;
   name: any;
-
+  postTypes = [
+    {id: 'question', value: 2, name: 'Вопрос'},
+    {id: 'advert', value: 4, name: 'Объявление'},
+    {id: 'event', value: 5, name: 'Событие'},
+    {id: 'article', value: 3, name: 'Статья'},
+    ];
 
   constructor(
     private fb: FormBuilder,
@@ -26,7 +31,8 @@ export class CreatePostComponent implements OnInit {
       {
         title: [''],
         isAnonymous: new FormControl(false),
-        content: ['', Validators.required]
+        content: ['', Validators.required],
+        type: new FormControl(2)
       });
   }
 
@@ -34,6 +40,8 @@ export class CreatePostComponent implements OnInit {
   }
 
   createPost() {
+    console.log(this.createPostForm.get('postType'));
+
     if (this.createPostForm.invalid) {
       this.toastr.error('Нельзя создать пустой пост');
       return;

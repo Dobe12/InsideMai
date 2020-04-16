@@ -11,6 +11,21 @@
         placeholder="Заголовок темы (не обязательно)"
         type="text"/>
     </mat-form-field>
+    <div class="create-post__type">
+      <div class="create-post__type-tag" *ngFor="let type of postTypes;">
+        <input
+          type="radio"
+          name="type"
+          formControlName="type"
+          [id]="type.id"
+          [value]="type.value"
+        >
+        <label
+          [htmlFor]="type.id">
+          {{type.name}}</label>
+      </div>
+    </div>
+
     <editor
       apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"
       formControlName="content"

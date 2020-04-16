@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {Post} from "../../core/models/post";
 import {ToastrService} from "ngx-toastr";
 import {UserReactionsService} from "../../core/services/user-reactions.service";
+import {User} from "../../core/models/user";
 
 @Component({
   selector: 'app-post',

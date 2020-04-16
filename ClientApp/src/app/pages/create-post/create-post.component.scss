@@ -18,6 +18,35 @@ $mai-color: rgb(0, 149, 218);
     width: 100%;
   }
 
+  .create-post__type {
+    margin: 20px 80px;
+    display: flex;
+    justify-content: space-between;
+
+    .create-post__type-tag {
+
+      & label {
+        background-color: rgba(214, 224, 236, 0.72);
+        border-radius: 14px;
+        cursor: pointer;
+        padding: 5px 20px;
+
+        &:hover {
+          background-color: rgba(52, 133, 231, 0.72);
+          transition: 0.2s;
+        }
+      }
+
+      & input:checked + label {
+        background-color: rgba(52, 133, 231, 0.72);
+      }
+
+      & input {
+        display: none;
+      }
+    }
+  }
+
   .create-post__button {
     right: 50px;
     bottom: 30px;

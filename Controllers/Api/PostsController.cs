@@ -196,7 +196,7 @@ namespace InsideMai.Controllers.Api
         [HttpGet("user/{userid}")]
         public async Task<IActionResult> GetPostsByUser([FromRoute] int userId)
         {
-            var posts = await AllPosts.Where(p => p.Author.Id == userId).ToListAsync();
+            var posts = await AllPosts.Where(p => p.Author.Id == userId && !p.IsAnonymous).ToListAsync();
 
             var viewModel = _mapper.Map<List<PostViewModel>>(posts);
 

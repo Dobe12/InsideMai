@@ -20,7 +20,8 @@ namespace InsideMai.ViewModels
         public bool AddedToFavByCurrentUser { get; set; }
 
 
-        public virtual Department Department { get; set; }
+
+        public virtual DepartmentViewModel Department { get; set; }
         public virtual UserViewModel Author { get; set; }
     }
 }

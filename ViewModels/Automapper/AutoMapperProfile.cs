@@ -25,7 +25,10 @@ namespace InsideMai.ViewModels.AutoMapperProfile
             CreateMap<Post, PostViewModel>()
                 .ForMember(dst => dst.Author,
                     opts => opts.MapFrom((src, dto, i, context) =>
-                        context.Mapper.Map<UserViewModel>(src.Author)))
+                        src.IsAnonymous ?
+                            new UserViewModel()
+                                { FullName = "Анонимно", UserPic = "b91a76fd-168f-4302-99b1-ddf063485c58.png" }
+                            : context.Mapper.Map<UserViewModel>(src.Author)))
                 .ForMember(dst => dst.Department,
                     opts => opts.MapFrom((src, dto, i, context) =>
                         context.Mapper.Map<DepartmentViewModel>(src.Department)));
@@ -38,13 +41,15 @@ namespace InsideMai.ViewModels.AutoMapperProfile
             CreateMap<Post, UserPostViewModel>()
                 .ForMember(dst => dst.Author,
                     opts => opts.MapFrom((src, dto, i, context) =>
-                        context.Mapper.Map<UserViewModel>(src.Author)))
+                        src.IsAnonymous ? 
+                            new UserViewModel() 
+                                { FullName = "Анонимно", UserPic = "b91a76fd-168f-4302-99b1-ddf063485c58.png" } 
+                            : context.Mapper.Map<UserViewModel>(src.Author)))
                 .ForMember(dst => dst.Department,
                     opts => opts.MapFrom((src, dto, i, context) =>
                         context.Mapper.Map<DepartmentViewModel>(src.Department)))
                 .ForMember(dst => dst.Comments, opts => opts.MapFrom((src, dto, i, context) =>
                     context.Mapper.Map<List<CommentViewModel>>(src.Comments)));
-
 
         }
     }
