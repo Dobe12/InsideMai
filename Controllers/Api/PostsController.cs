@@ -24,15 +24,17 @@ namespace InsideMai.Controllers.Api
         private readonly CurrentUser _currentUser;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly SearchEngine _searchEngine;
 
 
         public PostsController(InsideMaiContext context, CurrentUser currentUser,
-            UserManager<User> userManager, IMapper mapper)
+            UserManager<User> userManager, IMapper mapper, SearchEngine search)
         {
             _context = context;
             _currentUser = currentUser;
             _userManager = userManager;
             _mapper = mapper;
+            _searchEngine = search;
         }
 
         private IQueryable<Post> AllPosts
@@ -138,7 +140,7 @@ namespace InsideMai.Controllers.Api
         }
 
         [HttpGet("all/like")]
-        public async Task<IActionResult> GetDeparmentPostsByLikes([FromRoute] int id)
+        public async Task<IActionResult> GetDepartmentPostsByLikes([FromRoute] int id)
         {
             var posts = await AllPosts.Where(p => p.Department.Id == id).ToListAsync();
 
@@ -194,11 +196,24 @@ namespace InsideMai.Controllers.Api
         }
 
         [HttpGet("user/{userid}")]
-        public async Task<IActionResult> GetPostsByUser([FromRoute] int userId)
+        public async Task<IActionResult> GetUserPosts([FromRoute] int userId)
         {
             var posts = await AllPosts.Where(p => p.Author.Id == userId && !p.IsAnonymous).ToListAsync();
 
             var viewModel = _mapper.Map<List<PostViewModel>>(posts);
+
+            return Ok(viewModel);
+        }
+
+        [HttpGet("user/{userid}/fav")]
+        public async Task<IActionResult> GetUserFavPosts([FromRoute] int userId)
+        {
+            var allPosts = await AllPosts.ToListAsync();
+            var userFavorites = await _context.Favorites.Where(l => l.UserId == userId).ToListAsync();
+
+            var favPosts = allPosts.Where(p => userFavorites.Any(f => f.PostId == p.Id));
+
+            var viewModel = _mapper.Map<List<PostViewModel>>(favPosts);
 
             return Ok(viewModel);
         }
@@ -228,25 +243,13 @@ namespace InsideMai.Controllers.Api
             return Ok(posts);
         }
 
-        //Доработать, не работает!!!!
         [HttpGet("search/{terms}")]
         public async Task<IActionResult> GetPostByTitle([FromRoute] string terms)
         {
-            var searchedWords = terms.Split('%');
+            var allPosts = await AllPosts.ToListAsync();
 
-            var posts = await AllPosts.Select(post => new
-                {
-                    Post = post,
-                    CountSearchedWords = searchedWords.Count(sw => sw.All(word => post.Title.Contains(word)))
-                }).Where(post => post.CountSearchedWords > 0).OrderByDescending(cw => cw.CountSearchedWords)
-                .Select(post => post.Post).ToListAsync();
-
-            if (posts == null)
-            {
-                return BadRequest("Пост не найден");
-            }
-
-            var viewModel = _mapper.Map<List<PostViewModel>>(posts);
+            var result = _searchEngine.SearchPosts(allPosts, terms);
+            var viewModel = _mapper.Map<List<PostViewModel>>(result);
 
             return Ok(viewModel);
         }

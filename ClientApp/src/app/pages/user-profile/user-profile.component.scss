@@ -4,9 +4,9 @@
   font-family: ysans,Arial,sans-serif;
   .user-profile__user-info {
     width: var(--post-width);
-    height: 200px;
+    height: 300px;
     background-color: white;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     box-shadow: var(--shadow);
@@ -26,7 +26,7 @@
       width: 100px;
       height: 100px;
       position: absolute;
-      top: 50%;
+      top: 60%;
       left: 5%;
 
       &:hover:before {
@@ -90,6 +90,44 @@
       cursor: pointer;
       background-color: #006897;
     }
+  }
+
+  .user-profile__post-switcher {
+    display: flex;
+    width: 100%;
+    height: 15%;
+    padding-top: 30px;
+
+    .user-profile__post-type {
+      background: #e3ecee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      width: 50%;
+      font-weight: 600;
+      font-size: 1rem;
+
+      &:hover:not(.active) {
+        cursor: pointer;
+      }
+
+      &:first-child {
+
+        &.active {
+          box-shadow: inset -5px -5px 5px rgba(154, 147, 140, 0.5)
+        }
+      }
+
+      &:last-child {
+
+        &.active {
+          box-shadow: inset 5px -5px 5px rgba(154, 147, 140, 0.5)
+        }
+      }
+
+    }
+
   }
 
   .user-profile__user-posts {

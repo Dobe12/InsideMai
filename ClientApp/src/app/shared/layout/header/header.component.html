@@ -7,15 +7,19 @@
       <app-search-form></app-search-form>
     </div>
     <div class="header__profile">
-      <app-profile *ngIf="!auth.isLoggedIn()" [routerLink]="['/login']"></app-profile>
-      <div *ngIf="auth.isLoggedIn()">
-        <a  [routerLink] = "['/user', auth.currentUserValue?.id]">{{ auth.currentUserValue?.fullName}}</a>
-        <br>
-        <a class="pointer"
+      <div class="header__profile-wrapper" *ngIf="auth.isLoggedIn()">
+        <div
+          class="header__username"
+          [routerLink] = "['/user', auth.currentUserValue?.id]"
+        >
+          {{ auth.currentUserValue?.fullName}}
+        </div>
+        <span> |</span>
+        <div class="pointer"
          (click)="auth.logout()"
          [routerLink]="['/login']">
-        Logout
-      </a>
+        Выход
+      </div>
     </div>
     </div>
   </div>

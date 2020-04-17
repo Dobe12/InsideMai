@@ -15,6 +15,16 @@
         Подписаться
       </div>
     </div>
+    <div class="user-profile__post-switcher">
+      <div class="user-profile__post-type"
+           (click)="switchPostType('userPost')"
+           [class.active]="userPostType == 'userPost'"
+      > Публикации пользователя</div>
+      <div class="user-profile__post-type "
+           (click)="switchPostType('userFav')"
+           [class.active]="userPostType == 'userFav'"
+      >Избранное</div>
+    </div>
   </div>
   <div class="user-profile__user-posts">
     <div class="user-profile__user-posts" *ngFor="let post of userPosts">

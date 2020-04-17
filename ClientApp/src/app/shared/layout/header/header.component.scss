@@ -23,4 +23,26 @@
 
   .header__search {
   }
+
+  .header__profile {
+    color: black;
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+
+    .header__profile-wrapper {
+      display: flex;
+
+      .header__username {
+        cursor: pointer;
+      }
+
+      .pointer {
+        font-size: 8px;
+        color: #69696c;
+      }
+    }
+
+
+  }
 }

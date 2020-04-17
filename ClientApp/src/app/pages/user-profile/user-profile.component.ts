@@ -16,6 +16,7 @@ import {ToastrService} from "ngx-toastr";
 export class UserProfileComponent implements OnInit {
   user: User;
   userPosts: Post[];
+  userPostType = 'userPost';
 
   constructor(private route: ActivatedRoute,
               private usersService: UsersService,
@@ -27,7 +28,7 @@ export class UserProfileComponent implements OnInit {
       const id = param.get('id');
 
       const user = this.usersService.get(id);
-      const userPosts = this.postsService.getUserPost(id);
+      const userPosts = this.postsService.getUserPosts(id);
 
       return forkJoin([user, userPosts]);
     })).subscribe(result => {
@@ -50,6 +51,22 @@ export class UserProfileComponent implements OnInit {
           this.user = result as User;
         });
       };
+    }
+  }
+
+  switchPostType(type: string) {
+    if (type === 'userFav') {
+      this.postsService.getUserFavPosts(this.user.id).subscribe(
+        result => {
+          this.userPostType = type;
+          this.userPosts = result as Post[];
+        });
+    } else if (type === 'userPost') {
+      this.postsService.getUserPosts(this.user.id).subscribe(
+        result => {
+          this.userPostType = type;
+          this.userPosts = result as Post[];
+        });
     }
   }
 }

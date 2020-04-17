@@ -5,7 +5,7 @@ import {DepartmentLevels, Post, PostType} from "../models/post";
 import {environment} from "../../../environments/environment";
 import {BehaviorSubject} from "rxjs";
 import {User} from "../models/user";
-import {distinctUntilChanged} from "rxjs/operators";
+import {debounceTime, delay, distinctUntilChanged} from "rxjs/operators";
 import {Router} from "@angular/router";
 
 @Injectable()
@@ -27,8 +27,25 @@ export class PostsService extends DataService {
     return this.postsSubject.value;
   }
 
-  getUserPost(userId) {
+  getUserPosts(userId) {
     return this.http.get(this.url + '/user/' + userId);
+  }
+
+  getUserFavPosts(userId) {
+    return this.http.get(this.url + '/user/' + userId + '/fav');
+  }
+
+  searchPosts(terms: string) {
+    console.log(terms);
+    if (terms === null || terms === '') {
+      this.applyFilters();
+      return;
+    }
+
+    return this.http.get(this.url + '/search/' + terms).pipe(debounceTime(10000)).subscribe(
+      response =>  {
+        this.postsSubject.next(response as Post[]);
+      });
   }
 
   getPostComments(postId) {

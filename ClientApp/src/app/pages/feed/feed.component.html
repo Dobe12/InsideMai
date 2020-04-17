@@ -22,11 +22,11 @@
         Группа
       </a>
     </div>
-    <div class="feed__sort">
-      <div class="feed__srot-term">новое</div>
-      <div>/</div>
-      <div class="feed__srot-term">интересное</div>
-    </div>
+  <!--    <div class="feed__sort">-->
+  <!--      <div class="feed__srot-term">новое</div>-->
+  <!--      <div>/</div>-->
+  <!--      <div class="feed__srot-term">интересное</div>-->
+  <!--    </div>-->
   </div>
   <div class="feed__posts" *ngFor="let post of postsService.posts | async">
     <app-post [post]="post"></app-post>

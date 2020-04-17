@@ -41,6 +41,7 @@ namespace InsideMai
             });
 
             services.AddScoped<CurrentUser>();
+            services.AddScoped<SearchEngine>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.Configure<JwtSettings>(Configuration.GetSection("JWT"));

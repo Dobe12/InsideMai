@@ -37,5 +37,4 @@ export class FeedComponent implements OnInit {
   get departmentLevel() {
     return DepartmentLevels[this.postsService.departmentLevel].toLowerCase();
   }
-
 }

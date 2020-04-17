@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PostsService} from "../../core/services/posts.service";
 
 @Component({
   selector: 'app-search-form',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(private postsService: PostsService) { }
 
   ngOnInit(): void {
   }
 
+  searchPosts(terms: string) {
+    this.postsService.searchPosts(terms);
+  }
 }
