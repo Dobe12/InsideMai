@@ -37,6 +37,7 @@ import { CreatePostComponent } from './pages/create-post/create-post.component';
 import {MatInputModule} from "@angular/material/input";
 import {MarkdownModule} from "ngx-markdown";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     NewCommentFormComponent,
     LoginComponent,
     CreatePostComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,9 +82,10 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
           {path: 'post/:id', component: UserPostComponent},
           {path: 'user/:id', component: UserProfileComponent},
           {path: ':type/:level', component: FeedComponent },
-          {path: 'create', component: CreatePostComponent}
+          {path: 'create', component: CreatePostComponent},
+          {path: '**', component: NotFoundComponent}
         ]
-      }
+      },
     ]),
     ReactiveFormsModule,
     FormsModule,

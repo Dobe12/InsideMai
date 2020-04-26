@@ -38,8 +38,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\404.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ClientApp\src\app\core\pipes\" />
     <Folder Include="ClientApp\src\app\shared\buttons\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\404.png" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
