@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {Post} from "../../core/models/post";
 import {ToastrService} from "ngx-toastr";
 import {UserReactionsService} from "../../core/services/user-reactions.service";
 import {User} from "../../core/models/user";
+import {PostsService} from "../../core/services/posts.service";
+import {AuthService} from "../../core/auth/auth.service";
 
 @Component({
   selector: 'app-post',
@@ -10,9 +12,11 @@ import {User} from "../../core/models/user";
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit {
-@Input() post: Post;
+  @Input() post: Post;
+  @Output() onDeletePost = new EventEmitter();
   constructor(private userReactionsService: UserReactionsService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              public authService: AuthService) { }
 
   ngOnInit(): void {
     if (this.post.isAnonymous) {
@@ -57,5 +61,10 @@ export class PostComponent implements OnInit {
   private removeLike(post: Post) {
     this.post.likedByCurrentUser = false;
     this.post.likesCount--;
+  }
+
+
+  deletePost(id: number) {
+    this.onDeletePost.emit(id);
   }
 }

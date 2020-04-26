@@ -88,7 +88,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     FormsModule,
     JwtModule,
     MatInputModule,
-    MatCheckboxModule,
+    MatCheckboxModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},

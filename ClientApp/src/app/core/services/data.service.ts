@@ -23,8 +23,8 @@ export class DataService {
     return this.http.patch(this.url + '/' + resource.id, JSON.stringify(resource));
   }
 
-  delete(resource) {
-    return this.http.delete(this.url + '/' + resource.id);
+  delete(id) {
+    return this.http.delete(this.url + '/' + id);
   }
 }
 

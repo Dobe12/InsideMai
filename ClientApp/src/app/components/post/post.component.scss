@@ -51,6 +51,16 @@ $ico-color: gray;
       color: #939cb0;
       font-size: 11px;
     }
+
+    .post-header__delete {
+      margin-left: auto;
+      align-self: end;
+      opacity: 0.8;
+      cursor: pointer;
+      font-size: 0.6rem;
+
+
+    }
   }
 
   .post-content {

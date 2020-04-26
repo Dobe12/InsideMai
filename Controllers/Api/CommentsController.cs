@@ -81,11 +81,15 @@ namespace InsideMai.Controllers.Api
             string identityId = User.Claims.FirstOrDefault().Value;
             User user = await _context.Users.FirstAsync(u => u.Id.ToString() == identityId);
 
-            if (comment.Author.Id == user.Id)
+            if (comment.AuthorId == user.Id)
                 return true;
 
-            User identity = await _userManager.FindByNameAsync(identityId);
-            if (_userManager.GetRolesAsync(identity).Result.Any(r => r == "Admin" || r == "Moderator"))
+            User identity = await _userManager.FindByIdAsync(identityId);
+
+            var test = _userManager.GetRolesAsync(identity);
+            var test2 = _userManager.GetRolesAsync(identity);
+
+            if (identity.Role == Models.User.Roles.Admin)
                 return true;
 
             return false;

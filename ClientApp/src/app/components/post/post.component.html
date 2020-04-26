@@ -6,13 +6,13 @@
     <div class="post-header__userinfo">
       <div class="post-header__username pointer"
            [routerLink] = "['/user', post.author.id]">
-<!--       После добавления вью модели с fullName убрать-->
         {{post?.author?.fullName }}
       </div>
       <div class="post-header__time">
         {{post.publishDate | date}}
       </div>
     </div>
+    <a *ngIf="authService.isAdmin()" class="post-header__delete" (click)="deletePost(post?.id)">delete</a>
   </div>
   <div class="post-content">
     <div class="post-content__title pointer"

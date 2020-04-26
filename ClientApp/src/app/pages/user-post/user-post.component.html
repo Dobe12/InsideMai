@@ -2,14 +2,18 @@
   <div class="user-post__post">
     <app-post
       *ngIf="post"
-      [post]="post"></app-post>
+      [post]="post"
+      (onDeletePost)="deletePost($event)"
+    ></app-post>
   </div>
   <div class="user-post__comments" *ngIf="postComments">
     <app-comment
       *ngFor="let comment of postComments"
+      (onDeleteComment)="deleteComment($event)"
       [comment]="comment">
     </app-comment>
-    <app-new-comment-form (addedComment)="addComment($event)"></app-new-comment-form>
+    <app-new-comment-form
+      (addedComment)="addComment($event)"></app-new-comment-form>
   </div>
   <div class="user-post__add-comment"></div>
 </div>

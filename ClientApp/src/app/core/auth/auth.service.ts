@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {distinctUntilChanged, map} from "rxjs/operators";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {UsersService} from "../services/users.service";
-import {User} from "../models/user";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Roles, User} from "../models/user";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +59,11 @@ export class AuthService  {
     }
     return !this.jwtHelper.isTokenExpired(token);
   }
+
+  isAdmin() {
+    return this.currentUserValue.role === Roles.Admin;
+  }
+
 }
 
 

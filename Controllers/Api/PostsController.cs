@@ -231,6 +231,7 @@ namespace InsideMai.Controllers.Api
             post.IsDeleted = true;
 
             _context.Update(post);
+            await _context.SaveChangesAsync();
 
             return Ok();
         }

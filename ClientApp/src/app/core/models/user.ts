@@ -7,8 +7,14 @@ export class  User {
   userPic: string;
   department: Department;
   posts: Post[];
-  // в будущем нна стороне бека сделать мапер, который будет отсылать еще и fuulname
   fullName: string;
+  role: Roles;
+}
 
-
+export enum Roles {
+  Admin,
+  User,
+  Lecturer,
+  Employee,
+  Student
 }
