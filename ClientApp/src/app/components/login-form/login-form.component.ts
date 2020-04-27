@@ -1,15 +1,15 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../core/auth/auth.service";
 import {Router} from "@angular/router";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-login-form',
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginFormComponent implements OnInit {
   submitted = false;
   authForm: FormGroup;
 

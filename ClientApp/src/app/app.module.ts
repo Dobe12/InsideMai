@@ -38,6 +38,8 @@ import {MatInputModule} from "@angular/material/input";
 import {MarkdownModule} from "ngx-markdown";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { RestorePasswordFormComponent } from './components/restore-password-form/restore-password-form.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     LoginComponent,
     CreatePostComponent,
     NotFoundComponent,
+    LoginFormComponent,
+    RestorePasswordFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,7 +76,11 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
       timeOut: 1500
     }),
     RouterModule.forRoot([
-      {path: 'login', component: LoginComponent},
+      {path: 'login', component: LoginComponent,
+        children : [
+          {path: '', component: LoginFormComponent},
+          {path: 'restore', component: RestorePasswordFormComponent}
+        ]},
       {
         path: '',
         component: MainComponent,
