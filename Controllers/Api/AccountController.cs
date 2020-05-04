@@ -62,12 +62,37 @@ namespace InsideMai.Controllers.Api
             return Ok(user);
         }
 
+
+
+        [HttpPost("changePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
+        {
+            var currentUser = await _currentUser.GetCurrentUser(HttpContext);
+
+            var currentUserIdentity = await _userManager.FindByIdAsync(currentUser.Id.ToString());
+            if (currentUserIdentity == null)
+                return NotFound("Пользователь не найден");
+            if (!await _userManager.CheckPasswordAsync(currentUserIdentity, model.CurrentPassword))
+                return BadRequest("Неверный пароль");
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(currentUserIdentity);
+            var result = await _userManager.ResetPasswordAsync(currentUserIdentity, token, model.NewPassword);
+
+            if (result.Errors.Any())
+            {
+                return BadRequest(result.Errors.FirstOrDefault()?.Description);
+            }
+
+            return Ok(result);
+        }
+
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Email);
             if (user == null)
-                return BadRequest("Пользователь не найден");
+                return NotFound("Пользователь не найден");
 
             if (await _userManager.CheckPasswordAsync(user, model.Password))
             {

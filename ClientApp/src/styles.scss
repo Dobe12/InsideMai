@@ -72,6 +72,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-form-field-ripple {
   background-color: deepskyblue !important;
 }
+
+.mat-dialog-container {
+  border-radius: 50px;
+}
 .tox-statusbar {
   display: none !important;
 }

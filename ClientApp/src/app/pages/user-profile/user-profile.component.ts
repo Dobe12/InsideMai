@@ -7,6 +7,9 @@ import {PostsService} from "../../core/services/posts.service";
 import {mergeMap} from "rxjs/operators";
 import {forkJoin} from "rxjs";
 import {ToastrService} from "ngx-toastr";
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {ChangePasswordFormComponent} from "../../components/change-password-form/change-password-form.component";
+import {DialogPosition} from "@angular/material/dialog/dialog-config";
 
 @Component({
   selector: 'app-user-profile',
@@ -21,7 +24,8 @@ export class UserProfileComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private usersService: UsersService,
               private postsService: PostsService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.route.paramMap.pipe(mergeMap((param: ParamMap) => {
@@ -68,5 +72,14 @@ export class UserProfileComponent implements OnInit {
           this.userPosts = result as Post[];
         });
     }
+  }
+
+  onChangePassword() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.position = {top: '200px'};
+    this.dialog.open(ChangePasswordFormComponent, dialogConfig);
+
   }
 }

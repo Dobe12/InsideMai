@@ -1,0 +1,17 @@
+.close-ico {
+  float: right;
+  cursor: pointer;
+}
+
+.buttons {
+  float: right;
+
+  button {
+    margin-left: 20px;
+  }
+}
+:host ::ng-deep .mat-raised-button.green {
+  color: black;
+  background: #3ef03d;
+}
+

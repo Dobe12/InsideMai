@@ -71,6 +71,17 @@
   }
   .user-profile__buttons {
     position: relative;
+    font-family: ysans, Arial, sans-serif;
+
+
+    .user-profile__change-password {
+      position: absolute;
+      right: 10px;
+      bottom: 50px;
+      color: #939cb0;
+      font-size: .8rem;
+      cursor: pointer;
+    }
 
     .user-profile__subscribe {
       position: absolute;
@@ -78,7 +89,6 @@
       align-items: center;
       right: 20px;
       bottom: 5px;
-      font-family: ysans, Arial, sans-serif;
       text-decoration: none;
       font-size: 13pt;
       background-color: var(--mar-color-lighter);

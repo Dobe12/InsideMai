@@ -5,6 +5,9 @@ import {UserReactionsService} from "../../core/services/user-reactions.service";
 import {User} from "../../core/models/user";
 import {PostsService} from "../../core/services/posts.service";
 import {AuthService} from "../../core/auth/auth.service";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {ChangePasswordFormComponent} from "../change-password-form/change-password-form.component";
+import {ConfirmDeleteModalComponent} from "../confirm-delete-modal/confirm-delete-modal.component";
 
 @Component({
   selector: 'app-post',
@@ -16,7 +19,8 @@ export class PostComponent implements OnInit {
   @Output() onDeletePost = new EventEmitter();
   constructor(private userReactionsService: UserReactionsService,
               private toastr: ToastrService,
-              public authService: AuthService) { }
+              public authService: AuthService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     if (this.post.isAnonymous) {
@@ -64,7 +68,21 @@ export class PostComponent implements OnInit {
   }
 
 
-  deletePost(id: number) {
-    this.onDeletePost.emit(id);
+  deletePost(postId: number) {
+    const dialogRef = this.dialog.open(ConfirmDeleteModalComponent, {
+      position: {top: '200px'},
+      autoFocus: true,
+      data: {
+        id: postId,
+        title: 'Вы действительно хотите удалить публикацию ?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if  (result) {
+        this.onDeletePost.emit(result);
+      }
+    });
+
   }
 }

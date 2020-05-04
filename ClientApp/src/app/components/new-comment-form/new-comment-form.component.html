@@ -3,9 +3,9 @@
     <img [src]="auth.currentUserValue?.userPic" alt="userPic">
   </div>
   <div class="new-comment__content">
-    <textarea autosize class="new-comment__text" placeholder="Введите комментарий" #text></textarea>
+    <textarea autosize class="new-comment__text" placeholder="Введите комментарий" [(ngModel)]="commentText"></textarea>
   </div>
-  <div class="new-comment__sender"  (click)="addComment(text.value)">
+  <div class="new-comment__sender"  (click)="addComment()">
     <i class="material-icons">
       send
     </i>

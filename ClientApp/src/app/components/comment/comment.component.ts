@@ -3,6 +3,8 @@ import {Comment} from "../../core/models/comment";
 import {ToastrService} from "ngx-toastr";
 import {UserReactionsService} from "../../core/services/user-reactions.service";
 import {AuthService} from "../../core/auth/auth.service";
+import {ConfirmDeleteModalComponent} from "../confirm-delete-modal/confirm-delete-modal.component";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-comment',
@@ -16,7 +18,9 @@ export class CommentComponent implements OnInit {
 
   constructor(private userReactionsService: UserReactionsService,
               private toastr: ToastrService,
-              public authService: AuthService) { }
+              public authService: AuthService,
+              private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
   }
@@ -45,7 +49,20 @@ export class CommentComponent implements OnInit {
     this.comment.likesCount--;
   }
 
-  deleteComment(id: number) {
-    this.onDeleteComment.emit(id);
+  deleteComment(commentId: number) {
+    const dialogRef = this.dialog.open(ConfirmDeleteModalComponent, {
+      position: {top: '200px'},
+      autoFocus: true,
+      data: {
+        id: commentId,
+        title: 'Вы действительно хотите удалить комментарий ?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if  (result) {
+        this.onDeleteComment.emit(result);
+      }
+    });
   }
 }

@@ -4,6 +4,9 @@ import {ErrorHandler, NgModule, SecurityContext} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpInterceptor} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+
 
 import { ToastrModule } from 'ngx-toastr';
 
@@ -40,6 +43,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { RestorePasswordFormComponent } from './components/restore-password-form/restore-password-form.component';
+import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
+import { ConfirmDeleteModalComponent } from './components/confirm-delete-modal/confirm-delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +66,8 @@ import { RestorePasswordFormComponent } from './components/restore-password-form
     NotFoundComponent,
     LoginFormComponent,
     RestorePasswordFormComponent,
+    ChangePasswordFormComponent,
+    ConfirmDeleteModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +76,8 @@ import { RestorePasswordFormComponent } from './components/restore-password-form
     HttpClientModule,
     BrowserAnimationsModule,
     EditorModule,
+    MatDialogModule,
+    MatButtonModule,
     MarkdownModule.forRoot({
       sanitize: SecurityContext.NONE
     }),
@@ -111,6 +120,8 @@ import { RestorePasswordFormComponent } from './components/restore-password-form
     JwtHelperService,
     AuthGuard
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ChangePasswordFormComponent,
+  ConfirmDeleteModalComponent]
 })
 export class AppModule { }

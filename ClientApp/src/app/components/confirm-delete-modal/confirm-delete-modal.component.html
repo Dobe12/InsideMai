@@ -1,0 +1,8 @@
+<span class="material-icons close-ico" (click)="onCloseModal()">
+clear
+</span>
+<h2>{{title}}</h2>
+<div class="buttons">
+  <button mat-raised-button color="warn" (click)="onCloseModal()">Отмена</button>
+  <button mat-raised-button class="green" [mat-dialog-close]="id" >Подтвердить</button>
+</div>

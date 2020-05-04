@@ -8,16 +8,19 @@ import {AuthService} from "../../core/auth/auth.service";
   styleUrls: ['./new-comment-form.component.scss']
 })
 export class NewCommentFormComponent implements OnInit {
+
+  commentText: string;
+
   @Output() addedComment = new EventEmitter();
   constructor(public auth: AuthService) { }
 
   ngOnInit(): void {
   }
-  addComment(text: string) {
+  addComment() {
     const newComment = new Comment();
-    newComment.content = text;
-
+    newComment.content = this.commentText;
     this.addedComment.emit(newComment);
+    this.commentText = '';
   }
 
 }

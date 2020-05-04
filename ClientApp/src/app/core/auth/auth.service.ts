@@ -12,7 +12,7 @@ import {BehaviorSubject} from "rxjs";
 })
 
 export class AuthService  {
-  private url = environment.api_url + "account/login";
+  private url = environment.api_url + "account";
   public jwtHelper: JwtHelperService = new JwtHelperService();
   private currentUserSubject = new BehaviorSubject<User>({} as User);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
@@ -28,7 +28,7 @@ export class AuthService  {
   }
 
   login(credentials) {
-    return this.http.post<JwtResponse>(this.url, credentials)
+    return this.http.post<JwtResponse>(this.url + '/login', credentials)
       .pipe(map(response => {
         const result = response;
         if (result && result.token) {
@@ -38,6 +38,10 @@ export class AuthService  {
           return true;
         }
     }));
+  }
+
+  changePassword(currentPassword, newPassword) {
+    return this.http.post(this.url + '/changePassword', {currentPassword, newPassword});
   }
 
   private setUser(token) {
