@@ -27,9 +27,10 @@
       >Избранное</div>
     </div>
   </div>
-  <div class="user-profile__user-posts">
-    <div class="user-profile__user-posts" *ngFor="let post of userPosts">
-      <app-post [post]="post"></app-post>
+  <div class="user-profile__user-posts"  [@bounceIn]="userPostType">
+    <div class="user-profile__user-posts"
+         *ngFor="let post of userPosts">
+      <app-post  [post]="post"></app-post>
     </div>
   </div>
 </div>

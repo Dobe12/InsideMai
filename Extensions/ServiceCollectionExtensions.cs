@@ -47,9 +47,9 @@ namespace InsideMai.StartupExtensions
             services.AddDbContext<InsideMaiContext>(options => options.UseSqlServer(connection));
             services.AddIdentity<User, Role>(options =>
                 {
-                    options.Password.RequiredLength = 9;
-                    options.Password.RequireUppercase = true;
-                    options.Password.RequireDigit = true;
+                    options.Password.RequiredLength = 3;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireDigit = false;
                     options.Password.RequireLowercase = false;
                     options.Password.RequireNonAlphanumeric = false;
                 })

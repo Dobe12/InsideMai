@@ -36,14 +36,16 @@ export class PostsService extends DataService {
   }
 
   searchPosts(terms: string) {
-    console.log(terms);
     if (terms === null || terms === '') {
       this.applyFilters();
       return;
     }
 
-    return this.http.get(this.url + '/search/' + terms).pipe(debounceTime(10000)).subscribe(
+    return this.http.get<Post[]>(this.url + '/search/' + terms).pipe(debounceTime(10000)).subscribe(
       response =>  {
+        if (JSON.stringify(response) === JSON.stringify(this.postsValue)) {
+          return;
+        }
         this.postsSubject.next(response as Post[]);
       });
   }
@@ -63,7 +65,6 @@ export class PostsService extends DataService {
   applyFilters() {
     return this.http.get(this.url + `/filter/${this.type}/${this.departmentLevel}`).subscribe(
       response =>  {
-
         this.postsSubject.next(response as Post[]);
         this.redirect();
       });

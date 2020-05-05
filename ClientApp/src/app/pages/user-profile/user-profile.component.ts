@@ -10,11 +10,21 @@ import {ToastrService} from "ngx-toastr";
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {ChangePasswordFormComponent} from "../../components/change-password-form/change-password-form.component";
 import {DialogPosition} from "@angular/material/dialog/dialog-config";
+import {transition, trigger, useAnimation} from "@angular/animations";
+import {bounce, bounceIn, bounceInLeft, fadeInLeft} from "ng-animate";
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  styleUrls: ['./user-profile.component.scss'],
+  animations: [
+    trigger('bounceIn', [transition("userPost <=> userFav", useAnimation(bounceIn, {
+      params: {
+        delay: 0,
+        timing: 0.3
+      }
+    }))])
+  ]
 })
 export class UserProfileComponent implements OnInit {
   user: User;
