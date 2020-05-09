@@ -17,10 +17,13 @@ namespace InsideMai.Models
         public bool IsDeleted { get; set; }
         public int? DepartmentId { get; set; }
 
+        [JsonIgnore]
+        public virtual ICollection<SubscribersObservables> Subscribers { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<SubscribersObservables> Observables { get; set; }
 
-        public virtual ICollection<User> Subscribers { get; set; }
-        public virtual ICollection<Post> NewPosts { get; set; }
-
+       
+        public virtual ICollection<NotificationsOfNewPosts> NotificationsOfNewPosts { get; set; }
 
         public virtual Department Department { get; set; }
         [JsonIgnore]

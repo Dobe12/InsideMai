@@ -44,7 +44,8 @@ namespace InsideMai.Controllers.Api
             get
             {
                 return _context.Users.Where(u => u.IsDeleted == false)
-                    .Include(u => u.Department);
+                    .Include(u => u.Department)
+                    .Include(u => u.Subscribers);
             }
         }
 
@@ -71,7 +72,20 @@ namespace InsideMai.Controllers.Api
 
             var viewModel = _mapper.Map<UserViewModel>(result);
 
+            viewModel.IsSubscribe = await IsSubscribeOnUser(result);
+
             return Ok(viewModel);
+        }
+
+        private async Task<bool> IsSubscribeOnUser(User user)
+        {
+            var currentUser = await _currentUser.GetCurrentUser(HttpContext);
+
+            var isSubscribe = await _context.SubscribersObservables.FirstOrDefaultAsync(so =>
+                so.SubscriberId == currentUser.Id
+                && so.ObservableId == user.Id);
+
+            return isSubscribe != null;
         }
 
         [HttpGet("{id}/email")]
@@ -146,9 +160,10 @@ namespace InsideMai.Controllers.Api
                 return NotFound("Недостаточно прав");
             }
 
-            observableUser.Subscribers.Add(currentUser);
+            var subscribe = new SubscribersObservables()
+                { SubscriberId = currentUser.Id, ObservableId = observableUser.Id };
 
-            _context.Update(observableUser);
+            _context.SubscribersObservables.Add(subscribe);
             await _context.SaveChangesAsync();
 
             return Ok();
@@ -172,17 +187,16 @@ namespace InsideMai.Controllers.Api
                 return NotFound("Недостаточно прав");
             }
 
-            //if (!observableUser.Subscribers.Contains(currentUser))
-            //{
-            //    return BadRequest("Вы уже отписаны");
-            //}
+            var subscribe = await _context.SubscribersObservables
+                .FirstOrDefaultAsync(so => so.ObservableId == observableUser.Id 
+                                           && so.SubscriberId == currentUser.Id);
 
-            //observableUser.Subscribers.Remove(currentUser);
+            if (subscribe == null)
+            {
+                return BadRequest("Вы уже отписаны");
+            }
 
-            //обязательно переменовать всю эту херь и добавить проверки
-
-            observableUser.Subscribers.Remove(currentUser);
-            _context.Update(observableUser);
+            _context.SubscribersObservables.Remove(subscribe);
             await _context.SaveChangesAsync();
 
             return Ok();
@@ -213,7 +227,7 @@ namespace InsideMai.Controllers.Api
             currentUser.UserPic = user.UserPic;
             currentUser.Role = user.Role;
 
-            _context.Users.Update(currentUser);
+            //_context.Users.Update(currentUser);
             await _context.SaveChangesAsync();
 
             var viewModel = _mapper.Map<UserViewModel>(user);

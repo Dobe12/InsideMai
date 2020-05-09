@@ -94,12 +94,36 @@
       background-color: var(--mar-color-lighter);
       padding: 5px 20px;
       border-radius: 25px;
+
+      &:after {
+        content: 'Подписаться';
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: #006897;
+        transition: 0.5s;
+      }
     }
 
-    .user-profile__subscribe:hover {
-      cursor: pointer;
-      background-color: #006897;
+    .subscribed-mode {
+      background-color: #69f0ae;
+
+      &:after {
+        content: 'Подписаны';
+      }
+
+      &:hover {
+        background-color: #f44336;
+
+        &:after {
+          content: 'Отписаться';
+        }
+      }
     }
+
+
+
   }
 
   .user-profile__post-switcher {

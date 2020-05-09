@@ -9,13 +9,21 @@
     <div class="user-profile__name">{{user?.fullName}}</div>
     <div class="user-profile__buttons">
       <div class="user-profile__change-password" (click)="onChangePassword()">Сменить пароль</div>
-      <div class="user-profile__subscribe">
-        <i class="material-icons"
-        (click)="onSubscribe(user?.id)">
-          control_point
-        </i>
-        Подписаться
+      <div *ngIf="user">
+        <div class="user-profile__subscribe"
+             (click)="Subscribe(user?.id)"
+             *ngIf="!user?.isSubscribe else isSubscribe">
+          <i class="material-icons">
+            control_point
+          </i>
+        </div>
+        <ng-template #isSubscribe>
+          <div class="user-profile__subscribe subscribed-mode"
+               (click)="Unsubscribe(user?.id)">
+          </div>
+        </ng-template>
       </div>
+
     </div>
     <div class="user-profile__post-switcher">
       <div class="user-profile__post-type"

@@ -9,6 +9,7 @@ export class  User {
   posts: Post[];
   fullName: string;
   role: Roles;
+  isSubscribe?: boolean;
 }
 
 export enum Roles {

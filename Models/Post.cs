@@ -28,6 +28,9 @@ namespace InsideMai.Models
 
         public virtual ICollection<UserPostLike> PostLikes { get; set; }
 
+        public virtual ICollection<NotificationsOfNewPosts> NotificationsOfNewPosts { get; set; }
+
+
     }
 
     public enum PostType

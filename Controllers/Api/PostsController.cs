@@ -52,7 +52,7 @@ namespace InsideMai.Controllers.Api
 
         [HttpGet]
         public async Task<IActionResult> GetAllPosts()
-        {
+        { 
             var posts = await AllPosts.ToListAsync();
 
             return Ok(_mapper.Map<List<PostViewModel>>(posts));
@@ -402,25 +402,43 @@ namespace InsideMai.Controllers.Api
             return Ok();
         }
 
+        [HttpPost("notification/clear")]
+        public async Task<IActionResult> ClearNotification()
+        {
+            var currentUser = await _currentUser.GetCurrentUser(HttpContext);
+
+            var userNotificationPosts = await _context.NotificationsOfNewPosts.Where(np => np.UserId == currentUser.Id).ToListAsync();
+            
+            _context.NotificationsOfNewPosts.RemoveRange(userNotificationPosts);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
         private async Task NotifySubscribers(Post post)
         {
             var currentUser = await _currentUser.GetCurrentUser(HttpContext);
             var subscribers = currentUser.Subscribers;
 
+            var notificationsOfNewPosts = new List<NotificationsOfNewPosts>();
+
             foreach (var subscriber in subscribers)
             {
 
-                subscriber.NewPosts.Add(post);
+                  notificationsOfNewPosts.Add(new NotificationsOfNewPosts()
+                  {
+                      PostId = post.Id,
+                      UserId = subscriber.SubscriberId
+                  });
             }
 
-            _context.UpdateRange(subscribers);
-
+            _context.UpdateRange(notificationsOfNewPosts);
+            await _context.SaveChangesAsync();
         }
 
         private Task<bool> PostExist(int id)
         {
             return _context.Posts.AnyAsync(e => e.Id == id);
         }
-
     }
 }

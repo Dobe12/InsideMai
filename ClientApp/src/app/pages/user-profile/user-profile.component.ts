@@ -94,14 +94,18 @@ export class UserProfileComponent implements OnInit {
     this.dialog.open(ChangePasswordFormComponent, dialogConfig);
   }
 
-  onSubscribe(id: number) {
+  Subscribe(id: number) {
+    console.log(id);
     this.userReactionsService.subscribe(id).subscribe(result => {
+      this.user.isSubscribe = true;
       this.toastr.success("Вы успешно попдисались");
     });
   }
 
-  onUnsubscribe(id: number) {
+
+  Unsubscribe(id: number) {
     this.userReactionsService.unsubscribe(id).subscribe(result => {
+      this.user.isSubscribe = false;
       this.toastr.success("Вы успешно отписались");
     });
   }
