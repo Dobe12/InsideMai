@@ -18,6 +18,10 @@ namespace InsideMai.Models
         public int? DepartmentId { get; set; }
 
 
+        public virtual ICollection<User> Subscribers { get; set; }
+        public virtual ICollection<Post> NewPosts { get; set; }
+
+
         public virtual Department Department { get; set; }
         [JsonIgnore]
         public virtual ICollection<Post> Posts { get; set; }
@@ -25,7 +29,6 @@ namespace InsideMai.Models
         public virtual ICollection<Comment> Comments { get; set; }
         [JsonIgnore]
         public virtual ICollection<Favorite> Favorites { get; set; }
-
         [JsonIgnore]
         public virtual ICollection<UserPostLike> PostLikes { get; set; }
         [JsonIgnore]

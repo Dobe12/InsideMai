@@ -27,6 +27,7 @@ namespace InsideMai.Models
         public virtual ICollection<Favorite> Favorites { get; set; }
 
         public virtual ICollection<UserPostLike> PostLikes { get; set; }
+
     }
 
     public enum PostType

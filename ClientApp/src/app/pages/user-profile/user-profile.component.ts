@@ -12,6 +12,7 @@ import {ChangePasswordFormComponent} from "../../components/change-password-form
 import {DialogPosition} from "@angular/material/dialog/dialog-config";
 import {transition, trigger, useAnimation} from "@angular/animations";
 import {bounce, bounceIn, bounceInLeft, fadeInLeft} from "ng-animate";
+import {UserReactionsService} from "../../core/services/user-reactions.service";
 
 @Component({
   selector: 'app-user-profile',
@@ -35,7 +36,8 @@ export class UserProfileComponent implements OnInit {
               private usersService: UsersService,
               private postsService: PostsService,
               private toastr: ToastrService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private userReactionsService: UserReactionsService) { }
 
   ngOnInit(): void {
     this.route.paramMap.pipe(mergeMap((param: ParamMap) => {
@@ -90,6 +92,17 @@ export class UserProfileComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.position = {top: '200px'};
     this.dialog.open(ChangePasswordFormComponent, dialogConfig);
+  }
 
+  onSubscribe(id: number) {
+    this.userReactionsService.subscribe(id).subscribe(result => {
+      this.toastr.success("Вы успешно попдисались");
+    });
+  }
+
+  onUnsubscribe(id: number) {
+    this.userReactionsService.unsubscribe(id).subscribe(result => {
+      this.toastr.success("Вы успешно отписались");
+    });
   }
 }

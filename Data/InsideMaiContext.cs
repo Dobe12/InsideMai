@@ -21,9 +21,6 @@ namespace InsideMai.Data
 
 
 
-
-
-
         public InsideMaiContext(DbContextOptions<InsideMaiContext> options)
             : base(options)
         {

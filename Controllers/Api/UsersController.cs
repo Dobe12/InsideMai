@@ -129,6 +129,65 @@ namespace InsideMai.Controllers.Api
             return Ok(viewModel);
         }
 
+        [HttpPost("{userId}/subscribe")]
+        public async Task<IActionResult> SubscribeOnUser([FromRoute] int userId)
+        {
+            var observableUser = await _context.Users.FindAsync(userId);
+
+            if (observableUser == null)
+            {
+                return NotFound("Пользователь не найден");
+            }
+
+            var currentUser = await _currentUser.GetCurrentUser(HttpContext);
+
+            if (currentUser == null)
+            {
+                return NotFound("Недостаточно прав");
+            }
+
+            observableUser.Subscribers.Add(currentUser);
+
+            _context.Update(observableUser);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+
+        }
+
+        [HttpPost("{userId}/unsubscribe")]
+        public async Task<IActionResult> UnsubscribeOnUser([FromRoute] int userId)
+        {
+            var observableUser = await _context.Users.FindAsync(userId);
+
+            if (observableUser == null)
+            {
+                return NotFound("Пользователь не найден");
+            }
+
+            var currentUser = await _currentUser.GetCurrentUser(HttpContext);
+
+            if (currentUser == null)
+            {
+                return NotFound("Недостаточно прав");
+            }
+
+            //if (!observableUser.Subscribers.Contains(currentUser))
+            //{
+            //    return BadRequest("Вы уже отписаны");
+            //}
+
+            //observableUser.Subscribers.Remove(currentUser);
+
+            //обязательно переменовать всю эту херь и добавить проверки
+
+            observableUser.Subscribers.Remove(currentUser);
+            _context.Update(observableUser);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateUser([FromRoute] int id, [FromBody] User user)
         {

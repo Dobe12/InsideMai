@@ -10,7 +10,8 @@
     <div class="user-profile__buttons">
       <div class="user-profile__change-password" (click)="onChangePassword()">Сменить пароль</div>
       <div class="user-profile__subscribe">
-        <i class="material-icons">
+        <i class="material-icons"
+        (click)="onSubscribe(user?.id)">
           control_point
         </i>
         Подписаться

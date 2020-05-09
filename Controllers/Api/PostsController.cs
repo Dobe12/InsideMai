@@ -270,6 +270,9 @@ namespace InsideMai.Controllers.Api
 
             post.PublishDate = DateTime.Now;
             post.Author = await _currentUser.GetCurrentUser(HttpContext);
+
+            NotifySubscribers(post);
+
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
 
@@ -397,6 +400,21 @@ namespace InsideMai.Controllers.Api
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        private async Task NotifySubscribers(Post post)
+        {
+            var currentUser = await _currentUser.GetCurrentUser(HttpContext);
+            var subscribers = currentUser.Subscribers;
+
+            foreach (var subscriber in subscribers)
+            {
+
+                subscriber.NewPosts.Add(post);
+            }
+
+            _context.UpdateRange(subscribers);
+
         }
 
         private Task<bool> PostExist(int id)

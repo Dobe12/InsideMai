@@ -31,4 +31,12 @@ export class UserReactionsService {
   removeFromFav(id: number) {
     return this.http.delete(`${environment.api_url}posts/${id}/fav`);
   }
+
+  subscribe(id: number) {
+    return this.http.post(`${environment.api_url}users/${id}/subscribe`, {});
+  }
+
+  unsubscribe(id: number) {
+    return this.http.post(`${environment.api_url}users/${id}/unsubscribe`, {});
+  }
 }
