@@ -22,6 +22,7 @@ namespace InsideMai.ViewModels.AutoMapperProfile
                 .ForMember(dst => dst.DepartmentName,
                     opts => opts.MapFrom(src => src.Department.Name));
 
+
             CreateMap<Post, PostViewModel>()
                 .ForMember(dst => dst.Author,
                     opts => opts.MapFrom((src, dto, i, context) =>

@@ -271,9 +271,9 @@ namespace InsideMai.Controllers.Api
             post.PublishDate = DateTime.Now;
             post.Author = await _currentUser.GetCurrentUser(HttpContext);
 
-            NotifySubscribers(post);
-
             _context.Posts.Add(post);
+            await NotifySubscribers(post);
+
             await _context.SaveChangesAsync();
 
             return Ok();
@@ -418,7 +418,8 @@ namespace InsideMai.Controllers.Api
         private async Task NotifySubscribers(Post post)
         {
             var currentUser = await _currentUser.GetCurrentUser(HttpContext);
-            var subscribers = currentUser.Subscribers;
+            var subscribers = await _context.SubscribersObservables.Where(so => so.Observable == currentUser)
+                .Select(os => os.Observable).ToListAsync();
 
             var notificationsOfNewPosts = new List<NotificationsOfNewPosts>();
 
@@ -427,13 +428,12 @@ namespace InsideMai.Controllers.Api
 
                   notificationsOfNewPosts.Add(new NotificationsOfNewPosts()
                   {
-                      PostId = post.Id,
-                      UserId = subscriber.SubscriberId
+                      Post = post,
+                      User = subscriber
                   });
             }
 
-            _context.UpdateRange(notificationsOfNewPosts);
-            await _context.SaveChangesAsync();
+            await _context.AddRangeAsync(notificationsOfNewPosts);
         }
 
         private Task<bool> PostExist(int id)

@@ -62,17 +62,23 @@ namespace InsideMai.Controllers.Api
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser([FromRoute] int id)
         {
-            var user = await AllUsers.ToArrayAsync();
-            var result = user.FirstOrDefault(u => u.Id == id);
+            var allUsers = await AllUsers.ToArrayAsync();
+            var user = allUsers.FirstOrDefault(u => u.Id == id);
 
-            if (result == null)
+            if (user == null)
             {
                 return BadRequest("Пользователь не найден");
             }
 
-            var viewModel = _mapper.Map<UserViewModel>(result);
+            var viewModel = _mapper.Map<UserViewModel>(user);
 
-            viewModel.IsSubscribe = await IsSubscribeOnUser(result);
+            viewModel.IsSubscribe = await IsSubscribeOnUser(user);
+            if (user == await _currentUser.GetCurrentUser(HttpContext))
+            {
+                viewModel.NotificationsCount =
+                    await _context.NotificationsOfNewPosts.Where(np => np.User == user).CountAsync();
+            }
+            
 
             return Ok(viewModel);
         }
@@ -161,7 +167,7 @@ namespace InsideMai.Controllers.Api
             }
 
             var subscribe = new SubscribersObservables()
-                { SubscriberId = currentUser.Id, ObservableId = observableUser.Id };
+                { Subscriber = currentUser, Observable = observableUser };
 
             _context.SubscribersObservables.Add(subscribe);
             await _context.SaveChangesAsync();

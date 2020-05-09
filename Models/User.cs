@@ -22,7 +22,7 @@ namespace InsideMai.Models
         [JsonIgnore]
         public virtual ICollection<SubscribersObservables> Observables { get; set; }
 
-       
+        [JsonIgnore]
         public virtual ICollection<NotificationsOfNewPosts> NotificationsOfNewPosts { get; set; }
 
         public virtual Department Department { get; set; }

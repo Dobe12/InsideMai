@@ -10,6 +10,7 @@ export class  User {
   fullName: string;
   role: Roles;
   isSubscribe?: boolean;
+  notificationsCount: number;
 }
 
 export enum Roles {

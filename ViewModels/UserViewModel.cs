@@ -15,6 +15,7 @@ namespace InsideMai.ViewModels
         public string UserPic { get; set; }
         public virtual string DepartmentName { get; set; }
         public bool? IsSubscribe { get; set; }
+        public int NotificationsCount { get; set; }
 
     }
 }
