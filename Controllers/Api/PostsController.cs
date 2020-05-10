@@ -50,12 +50,32 @@ namespace InsideMai.Controllers.Api
             }
         }
 
+
         [HttpGet]
         public async Task<IActionResult> GetAllPosts()
         { 
             var posts = await AllPosts.ToListAsync();
 
-            return Ok(_mapper.Map<List<PostViewModel>>(posts));
+            var viewModel = _mapper.Map<List<PostViewModel>>(posts);
+
+            return Ok(viewModel);
+        }
+
+        [HttpGet("notified")]
+        public async Task<IActionResult> GetNotifiedPosts()
+        {
+            var currentUser = await _currentUser.GetCurrentUser(HttpContext);
+            var notificationsOfNewPosts =
+                await _context.NotificationsOfNewPosts.Where(np => np.User == currentUser).Include(np => np.Post)
+                    .ToListAsync();
+
+            var posts = notificationsOfNewPosts.Select(np => np.Post).OrderByDescending(p => p.PublishDate);
+
+            await ClearNotification(notificationsOfNewPosts);
+
+            var viewModel = _mapper.Map<List<PostViewModel>>(posts);
+
+            return Ok(viewModel);
         }
 
         [HttpGet("all/like")]
@@ -402,17 +422,11 @@ namespace InsideMai.Controllers.Api
             return Ok();
         }
 
-        [HttpPost("notification/clear")]
-        public async Task<IActionResult> ClearNotification()
+        private async Task ClearNotification(IEnumerable<NotificationsOfNewPosts> posts)
         {
-            var currentUser = await _currentUser.GetCurrentUser(HttpContext);
 
-            var userNotificationPosts = await _context.NotificationsOfNewPosts.Where(np => np.UserId == currentUser.Id).ToListAsync();
-            
-            _context.NotificationsOfNewPosts.RemoveRange(userNotificationPosts);
+            _context.NotificationsOfNewPosts.RemoveRange(posts);
             await _context.SaveChangesAsync();
-
-            return Ok();
         }
 
         private async Task NotifySubscribers(Post post)

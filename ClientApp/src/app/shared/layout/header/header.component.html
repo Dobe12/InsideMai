@@ -8,6 +8,11 @@
     </div>
     <div class="header__profile">
       <div class="header__profile-wrapper" *ngIf="auth.isLoggedIn()">
+        <div class="header__notification-counter"
+             (click)="showNewPosts()"
+             *ngIf="notificationCounter > 0">
+          <span>{{ notificationCounter }}</span>
+        </div>
         <div
           class="header__username"
           [routerLink] = "['/user', auth.currentUserValue?.id]"

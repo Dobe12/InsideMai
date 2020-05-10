@@ -35,6 +35,13 @@ export class PostsService extends DataService {
     return this.http.get(this.url + '/user/' + userId + '/fav');
   }
 
+  getNotifiedPosts() {
+    return this.http.get<Post[]>(this.url + '/notified').subscribe(
+      response =>  {
+        this.postsSubject.next(response as Post[]);
+      });
+  }
+
   searchPosts(terms: string) {
     if (terms === null || terms === '') {
       this.applyFilters();

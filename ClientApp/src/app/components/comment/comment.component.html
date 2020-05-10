@@ -9,7 +9,7 @@
         </div>
         <div class="comment__user-date">{{comment.publishDate | date}}</div>
       </div>
-      <a class="comment__delete" *ngIf="authService.isAdmin()" (click)="deleteComment(comment?.id)">delete</a>
+      <a class="comment__delete" *ngIf="authService.isAdmin()" (click)="deleteComment(comment?.id)">Удалить</a>
     </div>
     <div class="comment__text">{{comment.content}}</div>
     <div class="comment__footer">

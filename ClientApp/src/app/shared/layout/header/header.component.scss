@@ -33,6 +33,19 @@
     .header__profile-wrapper {
       display: flex;
 
+      .header__notification-counter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--red);
+        border-radius: 100%;
+        height: 1.2rem;
+        width: 1.2rem;
+        color: white;
+        margin-right: 2px;
+        cursor: pointer;
+      }
+
       .header__username {
         cursor: pointer;
       }
