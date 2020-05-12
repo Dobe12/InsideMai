@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Linq;
-using System.Threading.Tasks;
-using InsideMai.Models;
+﻿using InsideMai.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace InsideMai.Data
 {
-    public class InsideMaiContext : IdentityDbContext<User, Role, int>
+    public sealed class InsideMaiContext : IdentityDbContext<User, Role, int>
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -19,13 +14,8 @@ namespace InsideMai.Data
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<UserCommentLike> UserCommentLikes { get; set; }
         public DbSet<UserPostLike> UserPostLike { get; set; }
-
-        //public DbSet<User> Subscribers { get; set; }
-       // public DbSet<User> Observables { get; set; }
-       public DbSet<SubscribersObservables> SubscribersObservables { get; set; }
-       public DbSet<NotificationsOfNewPosts> NotificationsOfNewPosts { get; set; }
-
-
+        public DbSet<SubscribersObservables> SubscribersObservables { get; set; }
+        public DbSet<NotificationsOfNewPosts> NotificationsOfNewPosts { get; set; }
 
         public InsideMaiContext(DbContextOptions<InsideMaiContext> options)
             : base(options)
@@ -44,20 +34,23 @@ namespace InsideMai.Data
             modelBuilder.Entity<Favorite>();
             modelBuilder.Entity<UserPostLike>();
             modelBuilder.Entity<UserCommentLike>();
+
             modelBuilder.Entity<NotificationsOfNewPosts>().HasKey(so => new { so.PostId, so.UserId });
             modelBuilder.Entity<SubscribersObservables>().HasKey(so => new { so.SubscriberId, so.ObservableId });
+
             modelBuilder.Entity<SubscribersObservables>()
                 .HasOne(so => so.Observable)
                 .WithMany(b => b.Observables)
                 .HasForeignKey(so => so.ObservableId)
                 .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<SubscribersObservables>()
                 .HasOne(so => so.Subscriber)
                 .WithMany(c => c.Subscribers)
                 .HasForeignKey(so => so.SubscriberId)
                 . OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<IdentityRole>().HasData(
-                //new IdentityRole { Name = "User", NormalizedName = "User".ToUpper() },
                 new IdentityRole { Name = "Moderator", NormalizedName = "Moderator".ToUpper() },
                 new IdentityRole { Name = "Admin", NormalizedName = "Admin".ToUpper() }
             );
@@ -67,9 +60,8 @@ namespace InsideMai.Data
                 so.SubscriberId,
                 so.ObservableId
             });
+
             modelBuilder.Initialize();
-
         }
-
     }
 }

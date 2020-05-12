@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using InsideMai.Data;
 using InsideMai.Models;
@@ -21,7 +19,7 @@ namespace InsideMai.Services
 
         public async Task<User> GetCurrentUser(HttpContext context)
         {
-            var userId = Int32.Parse(context.User.Claims.FirstOrDefault()?.Value);
+            var userId = int.Parse(context.User.Claims.FirstOrDefault()?.Value);
             var user = await _insideMaiContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
             return user;

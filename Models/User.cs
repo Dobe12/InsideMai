@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 
@@ -9,7 +6,6 @@ namespace InsideMai.Models
 {
     public class User : IdentityUser<int>
     {
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public virtual Roles Role { get; set; }
@@ -21,10 +17,8 @@ namespace InsideMai.Models
         public virtual ICollection<SubscribersObservables> Subscribers { get; set; }
         [JsonIgnore]
         public virtual ICollection<SubscribersObservables> Observables { get; set; }
-
         [JsonIgnore]
         public virtual ICollection<NotificationsOfNewPosts> NotificationsOfNewPosts { get; set; }
-
         public virtual Department Department { get; set; }
         [JsonIgnore]
         public virtual ICollection<Post> Posts { get; set; }
@@ -36,6 +30,7 @@ namespace InsideMai.Models
         public virtual ICollection<UserPostLike> PostLikes { get; set; }
         [JsonIgnore]
         public virtual ICollection<UserCommentLike> CommentLikes { get; set; }
+
         public enum Roles
         {
             Admin,

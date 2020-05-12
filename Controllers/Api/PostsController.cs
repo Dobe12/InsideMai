@@ -19,13 +19,11 @@ namespace InsideMai.Controllers.Api
     [Authorize]
     public class PostsController : Controller
     {
-
         private readonly InsideMaiContext _context;
         private readonly CurrentUser _currentUser;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly SearchEngine _searchEngine;
-
 
         public PostsController(InsideMaiContext context, CurrentUser currentUser,
             UserManager<User> userManager, IMapper mapper, SearchEngine search)
@@ -50,7 +48,7 @@ namespace InsideMai.Controllers.Api
             }
         }
 
-
+        // GET api/posts
         [HttpGet]
         public async Task<IActionResult> GetAllPosts()
         { 
@@ -61,6 +59,69 @@ namespace InsideMai.Controllers.Api
             return Ok(viewModel);
         }
 
+        // GET api/posts/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPostsById([FromRoute] int id)
+        {
+            var post = await AllPosts.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (post == null)
+            {
+                return BadRequest("Пост не найден");
+            }
+
+            var viewModel = _mapper.Map<UserPostViewModel>(post);
+            await FillPostWithUserReactions(new List<PostViewModel> { viewModel });
+
+            return Ok(viewModel);
+        }
+
+        // POST api/posts
+        [HttpPost]
+        public async Task<IActionResult> AddPost([FromBody] Post post)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (_context.Posts.Any(p => p.Content == post.Content))
+            {
+                return BadRequest("Такой пост уже существует");
+            }
+
+            post.PublishDate = DateTime.Now;
+            post.Author = await _currentUser.GetCurrentUser(HttpContext);
+
+            _context.Posts.Add(post);
+            await NotifySubscribers(post);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        private async Task NotifySubscribers(Post post)
+        {
+            var notificationsOfNewPosts = new List<NotificationsOfNewPosts>();
+
+            var currentUser = await _currentUser.GetCurrentUser(HttpContext);
+            var subscribers = await _context.SubscribersObservables.Where(so => so.Observable == currentUser)
+                .Select(os => os.Observable).ToListAsync();
+
+            foreach (var subscriber in subscribers)
+            {
+                notificationsOfNewPosts.Add(new NotificationsOfNewPosts()
+                {
+                    Post = post,
+                    User = subscriber
+                });
+            }
+
+            await _context.AddRangeAsync(notificationsOfNewPosts);
+        }
+
+        // GET api/posts/notified
         [HttpGet("notified")]
         public async Task<IActionResult> GetNotifiedPosts()
         {
@@ -78,11 +139,17 @@ namespace InsideMai.Controllers.Api
             return Ok(viewModel);
         }
 
+        private async Task ClearNotification(IEnumerable<NotificationsOfNewPosts> posts)
+        {
+            _context.NotificationsOfNewPosts.RemoveRange(posts);
+            await _context.SaveChangesAsync();
+        }
+
+        // GET api/posts/all/like
         [HttpGet("all/like")]
         public async Task<IActionResult> GetAllPostsByLikes()
         {
             var posts = await AllPosts.ToListAsync();
-
             var result = posts.OrderByDescending(p => p.PostLikes);
 
             var viewModel = _mapper.Map<List<PostViewModel>>(result);
@@ -90,6 +157,7 @@ namespace InsideMai.Controllers.Api
             return Ok(viewModel);
         }
 
+        // GET api/posts/filter/2/3
         [HttpGet("filter/{type}/{departmentLevel}")]
         public async Task<IActionResult> GetFilteredPosts([FromRoute] int type, [FromRoute] int departmentLevel)
         {
@@ -128,7 +196,7 @@ namespace InsideMai.Controllers.Api
             var allDepartments = await _context.Departments.ToListAsync();
             var currentDepartment = allDepartments.FirstOrDefault(d => d.Id == currentDepartmentId);
 
-            while (currentDepartment.ParentId != null && currentDepartment.Level != departmentLevel)
+            while (currentDepartment?.ParentId != null && currentDepartment.Level != departmentLevel)
             {
                 currentDepartment = allDepartments.FirstOrDefault(d => d.Id == currentDepartment.ParentId);
             }
@@ -136,7 +204,7 @@ namespace InsideMai.Controllers.Api
             return currentDepartment;
         }
 
-        private async Task FillPostWithUserReactions(List<PostViewModel> model)
+        private async Task FillPostWithUserReactions(IEnumerable<PostViewModel> model)
         {
             var user = await _currentUser.GetCurrentUser(HttpContext);
             var userLikes = await _context.UserPostLike.Where(l => l.UserId == user.Id).ToListAsync();
@@ -144,26 +212,26 @@ namespace InsideMai.Controllers.Api
 
             foreach (var post in model)
             {
-                post.LikedByCurrentUser = (userLikes.Any(l => l.PostId == post.Id)) ? true : false;
-                post.AddedToFavByCurrentUser = (userFavorites.Any(l => l.PostId == post.Id)) ? true : false;
+                post.LikedByCurrentUser = (userLikes.Any(l => l.PostId == post.Id));
+                post.AddedToFavByCurrentUser = (userFavorites.Any(l => l.PostId == post.Id));
             }
         }
 
+        // GET api/posts/type/2
         [HttpGet("type/{id}")]
         public async Task<IActionResult> GetPostsByType([FromRoute] PostType type)
         {
             var posts = await AllPosts.Where(p => p.Type == type).ToListAsync();
-
             var result = posts.OrderByDescending(p => p.PublishDate);
 
             return Ok(_mapper.Map<List<PostViewModel>>(result));
         }
 
-        [HttpGet("all/like")]
+        // GET api/posts/departments/like
+        [HttpGet("departments/like")]
         public async Task<IActionResult> GetDepartmentPostsByLikes([FromRoute] int id)
         {
             var posts = await AllPosts.Where(p => p.Department.Id == id).ToListAsync();
-
             var result = posts.OrderByDescending(p => p.PostLikes);
 
             var viewModel = _mapper.Map<List<PostViewModel>>(result);
@@ -171,22 +239,7 @@ namespace InsideMai.Controllers.Api
             return Ok(viewModel);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetPostsById([FromRoute] int id)
-        {
-            var post = await AllPosts.FirstOrDefaultAsync(p => p.Id == id);
-
-            if (post == null)
-            {
-                return BadRequest("Пост не найден");
-            }
-
-            var viewModel = _mapper.Map<UserPostViewModel>(post);
-            await FillPostWithUserReactions(new List<PostViewModel> {viewModel});
-
-            return Ok(viewModel);
-        }
-
+        // GET api/posts/5/comments
         [HttpGet("{id}/comments")]
         public async Task<IActionResult> GetComments([FromRoute] int id)
         {
@@ -198,23 +251,25 @@ namespace InsideMai.Controllers.Api
             }
 
             var comments = post.Comments;
+
             var viewModel = _mapper.Map<List<CommentViewModel>>(comments);
             await FillCommentsLikesStatus(viewModel);
 
             return Ok(viewModel);
         }
 
-        private async Task FillCommentsLikesStatus(List<CommentViewModel> model)
+        private async Task FillCommentsLikesStatus(IEnumerable<CommentViewModel> model)
         {
             var user = await _currentUser.GetCurrentUser(HttpContext);
             var userLikes = await _context.UserCommentLikes.Where(l => l.UserId == user.Id).ToListAsync();
 
             foreach (var post in model)
             {
-                post.LikedByCurrentUser = (userLikes.Any(l => l.CommentId == post.Id)) ? true : false;
+                post.LikedByCurrentUser = (userLikes.Any(l => l.CommentId == post.Id));
             }
         }
 
+        // GET api/posts/user/4
         [HttpGet("user/{userid}")]
         public async Task<IActionResult> GetUserPosts([FromRoute] int userId)
         {
@@ -225,12 +280,12 @@ namespace InsideMai.Controllers.Api
             return Ok(viewModel);
         }
 
+        // GET api/posts/user/4/fav
         [HttpGet("user/{userid}/fav")]
         public async Task<IActionResult> GetUserFavPosts([FromRoute] int userId)
         {
             var allPosts = await AllPosts.ToListAsync();
             var userFavorites = await _context.Favorites.Where(l => l.UserId == userId).ToListAsync();
-
             var favPosts = allPosts.Where(p => userFavorites.Any(f => f.PostId == p.Id));
 
             var viewModel = _mapper.Map<List<PostViewModel>>(favPosts);
@@ -238,6 +293,7 @@ namespace InsideMai.Controllers.Api
             return Ok(viewModel);
         }
 
+        // DELETE api/posts/4
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePost([FromRoute] int id)
         {
@@ -256,6 +312,7 @@ namespace InsideMai.Controllers.Api
             return Ok();
         }
 
+        // GET api/posts/4/10
         [HttpGet("{startId}/{count}")]
         public async Task<IActionResult> GetSomePosts([FromRoute] int startId, [FromRoute] int count)
         {
@@ -264,41 +321,19 @@ namespace InsideMai.Controllers.Api
             return Ok(posts);
         }
 
+        // GET api/posts/search/apple
         [HttpGet("search/{terms}")]
         public async Task<IActionResult> GetPostByTitle([FromRoute] string terms)
         {
             var allPosts = await AllPosts.ToListAsync();
-
             var result = _searchEngine.SearchPosts(allPosts, terms);
+
             var viewModel = _mapper.Map<List<PostViewModel>>(result);
 
             return Ok(viewModel);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddPost([FromBody] Post post)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (_context.Posts.Any(p => p.Content == post.Content))
-            {
-                return BadRequest("Такой пост уже существует");
-            }
-
-            post.PublishDate = DateTime.Now;
-            post.Author = await _currentUser.GetCurrentUser(HttpContext);
-
-            _context.Posts.Add(post);
-            await NotifySubscribers(post);
-
-            await _context.SaveChangesAsync();
-
-            return Ok();
-        }
-
+        // GET api/posts/3/addComment
         [HttpPost("{id}/addComment")]
         public async Task<IActionResult> AddComment([FromRoute] int id, [FromBody] Comment comment)
         {
@@ -326,6 +361,7 @@ namespace InsideMai.Controllers.Api
             return Ok(viewModel);
         }
 
+        // GET api/posts/3/like
         [HttpPost("{id}/like")]
         public async Task<IActionResult> LikePost([FromRoute] int id)
         {
@@ -336,7 +372,6 @@ namespace InsideMai.Controllers.Api
             var like = await _context.UserPostLike.FirstOrDefaultAsync(l =>
                 l.UserId == user.Id && l.PostId == id);
             var post = await _context.Posts.FirstOrDefaultAsync(c => c.Id == id);
-
 
             if (like != null)
                 return BadRequest("Вы уже поставили лайк");
@@ -351,6 +386,7 @@ namespace InsideMai.Controllers.Api
             return Ok();
         }
 
+        // DELETE api/posts/3/like
         [HttpDelete("{id}/like")]
         public async Task<IActionResult> RemoveLike([FromRoute] int id)
         {
@@ -374,6 +410,7 @@ namespace InsideMai.Controllers.Api
             return Ok();
         }
 
+        // POST api/posts/3/fav
         [HttpPost("{id}/fav")]
         public async Task<IActionResult> FavoritePost([FromRoute] int id)
         {
@@ -385,7 +422,6 @@ namespace InsideMai.Controllers.Api
                 l.UserId == user.Id && l.PostId == id);
             var post = await _context.Posts.FirstOrDefaultAsync(c => c.Id == id);
 
-
             if (fav != null)
                 return BadRequest("Пост уже добавлен в избранное");
 
@@ -394,11 +430,12 @@ namespace InsideMai.Controllers.Api
             post.SavesCount++;
 
             _context.Update(post);
-
             await _context.SaveChangesAsync();
+
             return Ok();
         }
 
+        // DELETE api/posts/3/fav
         [HttpDelete("{id}/fav")]
         public async Task<IActionResult> RemoveFavorite([FromRoute] int id)
         {
@@ -420,34 +457,6 @@ namespace InsideMai.Controllers.Api
             await _context.SaveChangesAsync();
 
             return Ok();
-        }
-
-        private async Task ClearNotification(IEnumerable<NotificationsOfNewPosts> posts)
-        {
-
-            _context.NotificationsOfNewPosts.RemoveRange(posts);
-            await _context.SaveChangesAsync();
-        }
-
-        private async Task NotifySubscribers(Post post)
-        {
-            var currentUser = await _currentUser.GetCurrentUser(HttpContext);
-            var subscribers = await _context.SubscribersObservables.Where(so => so.Observable == currentUser)
-                .Select(os => os.Observable).ToListAsync();
-
-            var notificationsOfNewPosts = new List<NotificationsOfNewPosts>();
-
-            foreach (var subscriber in subscribers)
-            {
-
-                  notificationsOfNewPosts.Add(new NotificationsOfNewPosts()
-                  {
-                      Post = post,
-                      User = subscriber
-                  });
-            }
-
-            await _context.AddRangeAsync(notificationsOfNewPosts);
         }
 
         private Task<bool> PostExist(int id)

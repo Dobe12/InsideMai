@@ -35,6 +35,7 @@ namespace InsideMai.Controllers.Api
             }
         }
 
+        // GET api/departments/all
         [HttpGet("all")]
         public async Task<IActionResult> GetAllPosts()
         {
@@ -43,6 +44,7 @@ namespace InsideMai.Controllers.Api
             return Ok(departments);
         }
 
+        // POST api/departments/all/5
         [HttpPost("all/{parentId}")]
         public async Task<IActionResult> AddNewDepartment([FromBody] Department department)
         {
@@ -62,6 +64,7 @@ namespace InsideMai.Controllers.Api
             return Ok(department);
         }
 
+        // GET api/departments/5
         [HttpGet("{id}")]
         public async Task<IActionResult> AddNewDepartment([FromRoute] int id)
         {
@@ -81,8 +84,9 @@ namespace InsideMai.Controllers.Api
             return Ok(result);
         }
 
+        // DELETE api/departments/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletDeleteDepartmentePost([FromRoute] int id)
+        public async Task<IActionResult> DeleteDepartmentPost([FromRoute] int id)
         {
             var department = await AllDepartments.FirstOrDefaultAsync(p => p.Id == id);
 

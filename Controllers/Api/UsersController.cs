@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using AutoMapper;
 using InsideMai.Data;
@@ -11,7 +10,6 @@ using InsideMai.Services;
 using InsideMai.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +47,7 @@ namespace InsideMai.Controllers.Api
             }
         }
 
+        // GET api/users
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
@@ -59,6 +58,7 @@ namespace InsideMai.Controllers.Api
             return Ok(viewModel);
         }
 
+        // GET api/users/4
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser([FromRoute] int id)
         {
@@ -79,7 +79,6 @@ namespace InsideMai.Controllers.Api
                     await _context.NotificationsOfNewPosts.Where(np => np.User == user).CountAsync();
             }
             
-
             return Ok(viewModel);
         }
 
@@ -94,6 +93,7 @@ namespace InsideMai.Controllers.Api
             return isSubscribe != null;
         }
 
+        // GET api/users/4/email
         [HttpGet("{id}/email")]
         public async Task<IActionResult> SearchUser([FromRoute] string email)
         {
@@ -110,6 +110,7 @@ namespace InsideMai.Controllers.Api
             return Ok(viewModel);
         }
 
+        // GET api/users/8/department
         [HttpGet("{departmentId}/department")]
         public async Task<IActionResult> UsersByDepartment([FromRoute] int departmentId)
         {
@@ -126,10 +127,10 @@ namespace InsideMai.Controllers.Api
             return Ok(viewModel);
         }
 
+        // DELETE api/users/8
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
-
             var user = await _context.Users.FindAsync(id);
 
             if (user == null)
@@ -149,6 +150,7 @@ namespace InsideMai.Controllers.Api
             return Ok(viewModel);
         }
 
+        // POST api/users/4/subscribe
         [HttpPost("{userId}/subscribe")]
         public async Task<IActionResult> SubscribeOnUser([FromRoute] int userId)
         {
@@ -176,6 +178,7 @@ namespace InsideMai.Controllers.Api
 
         }
 
+        // POST api/users/4/unsubscribe
         [HttpPost("{userId}/unsubscribe")]
         public async Task<IActionResult> UnsubscribeOnUser([FromRoute] int userId)
         {
@@ -208,6 +211,7 @@ namespace InsideMai.Controllers.Api
             return Ok();
         }
 
+        // PATH api/users/4
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateUser([FromRoute] int id, [FromBody] User user)
         {
@@ -233,7 +237,6 @@ namespace InsideMai.Controllers.Api
             currentUser.UserPic = user.UserPic;
             currentUser.Role = user.Role;
 
-            //_context.Users.Update(currentUser);
             await _context.SaveChangesAsync();
 
             var viewModel = _mapper.Map<UserViewModel>(user);

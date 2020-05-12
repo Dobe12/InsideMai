@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using InsideMai.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,13 +15,6 @@ namespace InsideMai.Data
             InitializeIdentityUsers(modelBuilder);
             InitializePosts(modelBuilder);
             InitializeComments(modelBuilder);
-        }
-
-        private static void InitializeRolestest(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<IdentityRole>().HasData(
-                new IdentityRole { Name = "Admin", NormalizedName = "Admin".ToUpper() },
-            new IdentityRole { Name = "User", NormalizedName = "User".ToUpper() });
         }
 
         private static void InitializeUsers(ModelBuilder modelBuilder)
@@ -168,7 +158,6 @@ namespace InsideMai.Data
         private static void InitializeRoles(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasData(
-                //new IdentityRole { Name = "User", NormalizedName = "User".ToUpper() },
                 new Role { Id = 1, Name = "Moderator", NormalizedName = "Moderator".ToUpper() },
                 new Role { Id = 2, Name = "Admin", NormalizedName = "Admin".ToUpper() },
                 new Role { Id = 3, Name = "Student", NormalizedName = "Student".ToUpper() }

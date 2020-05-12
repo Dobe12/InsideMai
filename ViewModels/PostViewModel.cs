@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using InsideMai.Models;
 
 namespace InsideMai.ViewModels
@@ -18,8 +15,6 @@ namespace InsideMai.ViewModels
         public PostType Type { get; set; }
         public bool LikedByCurrentUser { get; set; }
         public bool AddedToFavByCurrentUser { get; set; }
-
-
 
         public virtual DepartmentViewModel Department { get; set; }
         public virtual UserViewModel Author { get; set; }

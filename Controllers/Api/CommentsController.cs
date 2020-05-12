@@ -40,6 +40,7 @@ namespace InsideMai.Controllers.Api
             }
         }
 
+        // DELETE api/comments/2
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteComment([FromRoute] int id)
         {
@@ -58,6 +59,7 @@ namespace InsideMai.Controllers.Api
             return Ok(viewModel);
         }
 
+        // POST api/comments/2/edit
         [HttpPost("{id}/edit")]
         public async Task<IActionResult> EditComment([FromRoute] int id, [FromBody] Comment comment)
         {
@@ -68,6 +70,7 @@ namespace InsideMai.Controllers.Api
 
             if (!await CheckRights(comment))
                 return BadRequest("Недостаточно прав");
+
             _context.Comments.Update(comment);
             await _context.SaveChangesAsync();
 
@@ -78,7 +81,7 @@ namespace InsideMai.Controllers.Api
 
         private async Task<bool> CheckRights(Comment comment)
         {
-            string identityId = User.Claims.FirstOrDefault().Value;
+            string identityId = User.Claims.FirstOrDefault()?.Value;
             User user = await _context.Users.FirstAsync(u => u.Id.ToString() == identityId);
 
             if (comment.AuthorId == user.Id)
@@ -86,15 +89,13 @@ namespace InsideMai.Controllers.Api
 
             User identity = await _userManager.FindByIdAsync(identityId);
 
-            var test = _userManager.GetRolesAsync(identity);
-            var test2 = _userManager.GetRolesAsync(identity);
-
             if (identity.Role == Models.User.Roles.Admin)
                 return true;
 
             return false;
         }
 
+        // POST api/comments/2/like
         [HttpPost("{id}/like")]
         public async Task<IActionResult> LikeComment([FromRoute] int id)
         {
@@ -105,7 +106,6 @@ namespace InsideMai.Controllers.Api
             var like = await _context.UserCommentLikes.FirstOrDefaultAsync(l =>
                 l.UserId == user.Id && l.CommentId == id);
             var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
-
 
             if (like != null)
                 return BadRequest("Не удалось поставить лайк");
@@ -120,6 +120,7 @@ namespace InsideMai.Controllers.Api
             return Ok();
         }
 
+        // DELETE api/comments/2/like
         [HttpDelete("{id}/like")]
         public async Task<IActionResult> RemoveLike([FromRoute] int id)
         {

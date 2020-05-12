@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Security.Policy;
-using System.Threading.Tasks;
 using InsideMai.Data;
 using InsideMai.Models;
 
@@ -51,6 +47,5 @@ namespace InsideMai.Services
         {
             return str.Split(' ');
         }
-    }  
-
+    }
 }

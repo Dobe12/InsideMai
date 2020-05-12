@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace InsideMai.Models
 {
     public class Post
@@ -23,14 +20,11 @@ namespace InsideMai.Models
 
         public virtual Department Department { get; set; }
         public virtual User Author { get; set; }
+
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Favorite> Favorites { get; set; }
-
         public virtual ICollection<UserPostLike> PostLikes { get; set; }
-
         public virtual ICollection<NotificationsOfNewPosts> NotificationsOfNewPosts { get; set; }
-
-
     }
 
     public enum PostType

@@ -20,7 +20,6 @@ namespace InsideMai.Controllers.Api
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
-
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly InsideMaiContext _context;
@@ -36,6 +35,7 @@ namespace InsideMai.Controllers.Api
             _currentUser = currentUser;
         }
 
+        // POST api/account/register
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
@@ -62,8 +62,7 @@ namespace InsideMai.Controllers.Api
             return Ok(user);
         }
 
-
-
+        // POST api/account/changePassword
         [HttpPost("changePassword")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
         {
@@ -86,7 +85,7 @@ namespace InsideMai.Controllers.Api
             return Ok(result);
         }
 
-
+        // POST api/account/login
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
@@ -98,7 +97,7 @@ namespace InsideMai.Controllers.Api
             {
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Subject = new ClaimsIdentity(new Claim[]
+                    Subject = new ClaimsIdentity(new[]
                     {
                         new Claim("UserID",user.Id.ToString())
                     }),
@@ -116,6 +115,7 @@ namespace InsideMai.Controllers.Api
                 return BadRequest("Неверная почта или пароль");
         }
 
+        // POST api/account/logout
         [HttpPost("logout")]
         [Authorize]
         public async Task<IActionResult> Logout(string returnUrl = null)
@@ -126,24 +126,26 @@ namespace InsideMai.Controllers.Api
             {
                 return Redirect("/Home/Index");
             }
-            else
-            {
-                return Ok();
-            }
+
+            return Ok();
         }
 
+        // GET api/account/confirmEmail
         [HttpGet("confirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
                 return BadRequest($"Пользователь с ID {userId} не найден!");
+
             var result = await _userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
                 return Redirect("/authorization/login");
+
             return BadRequest("Код подтверждения неверный");
         }
 
+        // GET api/account/profile
         [HttpGet("profile")]
         [Authorize]
         public async Task<IActionResult> GetProfile()
