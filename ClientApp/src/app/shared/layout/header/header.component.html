@@ -6,18 +6,18 @@
     <div class="header__search">
       <app-search-form></app-search-form>
     </div>
-    <div class="header__profile">
+    <div class="header__profile" *ngIf="currentUser$ | async as currentUser">
       <div class="header__profile-wrapper" *ngIf="auth.isLoggedIn()">
         <div class="header__notification-counter"
              (click)="showNewPosts()"
-             *ngIf="notificationCounter > 0">
-          <span>{{ notificationCounter }}</span>
+             *ngIf="currentUser.notificationsCount > 0">
+          <span>{{ currentUser.notificationsCount }}</span>
         </div>
         <div
           class="header__username"
-          [routerLink] = "['/user', auth.currentUserValue?.id]"
+          [routerLink] = "['/user', currentUser.id]"
         >
-          {{ auth.currentUserValue?.fullName}}
+          {{ currentUser.fullName}}
         </div>
         <span> |</span>
         <div class="pointer"

@@ -1,9 +1,11 @@
 .search-form__wrapper  {
   background: #ffffff;
+
   form {
     position: relative;
     width: 300px;
     margin: 0 auto;
+
     input,   button {
       outline: none;
       background: transparent;
@@ -27,6 +29,7 @@
       cursor: pointer;
       fill: gray;
     }
+
     button:hover {
       fill: black;
       transition: 0.5s;

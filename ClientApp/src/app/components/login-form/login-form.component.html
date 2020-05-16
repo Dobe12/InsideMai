@@ -5,14 +5,18 @@
   <form action="" class="login-form__fields"
         [formGroup]="authForm"
         (ngSubmit)="signIn()">
-    <div class="alert-danger" *ngIf="submitted && email.invalid">Введите почту</div>
+    <div class="alert-danger"
+         *ngIf="submitted && email.invalid">
+      Введите почту</div>
     <input
       type="text"
       class="login-form__field"
       formControlName="email"
       placeholder="email"
       id="email">
-    <div class="alert-danger" *ngIf="submitted && password.invalid">Введите пароль</div>
+    <div class="alert-danger"
+         *ngIf="submitted && password.invalid">
+      Введите пароль</div>
     <input
       type="password"
       class="login-form__field"
@@ -26,6 +30,8 @@
       class="login-form__remember">
       Запомнить
     </mat-checkbox>
-    <div class="login-form__forgot" routerLink="/login/restore">Забыл пароль</div>
+    <div class="login-form__forgot"
+         routerLink="/login/restore">
+      Забыл пароль</div>
   </div>
 </div>

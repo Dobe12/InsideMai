@@ -2,13 +2,19 @@
   <div class="user-profile__user-info">
     <div class="user-profile__header">
       <div class="user-profile__pic" (click)="fileInput.click()">
-        <input class="user-profile__pic-upload" id="fileInput" #fileInput type='file' (change)="onSelectFile($event)">
+        <input class="user-profile__pic-upload"
+               id="fileInput"
+               #fileInput
+               type='file'
+               (change)="onSelectFile($event)">
         <img [src]="user?.userPic">
       </div>
     </div>
     <div class="user-profile__name">{{user?.fullName}}</div>
     <div class="user-profile__buttons">
-      <div class="user-profile__change-password" (click)="onChangePassword()">Сменить пароль</div>
+      <div class="user-profile__change-password"
+           (click)="onChangePassword()">
+        Сменить пароль</div>
       <div *ngIf="user">
         <div class="user-profile__subscribe"
              (click)="Subscribe(user?.id)"

@@ -5,7 +5,7 @@ import {distinctUntilChanged, map} from "rxjs/operators";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {UsersService} from "../services/users.service";
 import {Roles, User} from "../models/user";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +14,16 @@ import {BehaviorSubject} from "rxjs";
 export class AuthService  {
   private url = environment.api_url + "account";
   public jwtHelper: JwtHelperService = new JwtHelperService();
-  private currentUserSubject = new BehaviorSubject<User>({} as User);
-  public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
 
   constructor(private http: HttpClient, private usersService: UsersService) {
     if (this.isLoggedIn()) {
       this.setUser(localStorage.getItem('token'));
     }
+
+    this.currentUserSubject = new BehaviorSubject<User>({} as User);
+    this.currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
   }
 
   public get currentUserValue(): User {

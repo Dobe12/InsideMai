@@ -6,8 +6,10 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./like.component.scss']
 })
 export class LikeComponent implements OnInit {
+
 @Input() likesCount: number;
 @Input() isLiked: boolean;
+
   constructor() { }
 
   ngOnInit(): void {

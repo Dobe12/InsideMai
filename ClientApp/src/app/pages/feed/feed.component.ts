@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {transition, trigger, useAnimation} from "@angular/animations";
 import {bounceIn} from "ng-animate";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-feed',
@@ -22,9 +23,9 @@ import {bounceIn} from "ng-animate";
 })
 export class FeedComponent implements OnInit {
 
-  @Input() posts: Post[];
   DepartmentLevels = DepartmentLevels;
-  isAnimate = false;
+
+  posts$: Observable<Post[]>;
 
   constructor(public postsService: PostsService,
               private authService: AuthService,
@@ -36,15 +37,7 @@ export class FeedComponent implements OnInit {
     this.postsService.departmentLevel = PostType.All;
     this.postsService.applyFilters();
 
-    this.postsService.posts.subscribe(res => {
-      this.posts = res;
-    });
-  }
-
-  postsFilter() {
-    this.postsService.getPostsByType(PostType.Advert).subscribe(res => {
-      this.posts = res as Post[];
-    });
+    this.posts$ = this.postsService.posts;
   }
 
   setFilter(filter: DepartmentLevels) {
@@ -58,7 +51,6 @@ export class FeedComponent implements OnInit {
 
   deletePost(id: number) {
     this.postsService.delete(id).subscribe(() => {
-      this.posts = this.posts.filter(p => p.id !== id);
       this.toast.success("Пост успешно удален");
     });
   }

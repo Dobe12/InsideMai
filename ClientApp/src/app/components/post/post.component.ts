@@ -15,8 +15,10 @@ import {ConfirmDeleteModalComponent} from "../confirm-delete-modal/confirm-delet
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit {
+
   @Input() post: Post;
   @Output() onDeletePost = new EventEmitter();
+
   constructor(private userReactionsService: UserReactionsService,
               private toastr: ToastrService,
               public authService: AuthService,
@@ -67,7 +69,6 @@ export class PostComponent implements OnInit {
     this.post.likesCount--;
   }
 
-
   deletePost(postId: number) {
     const dialogRef = this.dialog.open(ConfirmDeleteModalComponent, {
       position: {top: '200px'},
@@ -83,6 +84,5 @@ export class PostComponent implements OnInit {
         this.onDeletePost.emit(result);
       }
     });
-
   }
 }

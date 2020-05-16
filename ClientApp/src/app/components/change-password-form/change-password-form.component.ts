@@ -14,6 +14,7 @@ export class ChangePasswordFormComponent implements OnInit {
 
   newPasswordForm: FormGroup;
   wrongPassword = false;
+
   constructor(private fb: FormBuilder,
               private auth: AuthService,
               private toastr: ToastrService,

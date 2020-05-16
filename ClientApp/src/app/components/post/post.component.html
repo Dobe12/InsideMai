@@ -12,7 +12,10 @@
         {{post.publishDate | date}}
       </div>
     </div>
-    <a *ngIf="authService.isAdmin()" class="post-header__delete" (click)="deletePost(post?.id)">Удалить</a>
+    <a *ngIf="authService.isAdmin()"
+       class="post-header__delete"
+       (click)="deletePost(post?.id)">
+      Удалить</a>
   </div>
   <div class="post-content">
     <div class="post-content__title pointer"
@@ -24,7 +27,8 @@
     </div>
   </div>
   <div class="event-actions">
-    <div class="event-actions__comments event-actions_flex pointer color color-black" [routerLink] = "['/post', post.id]">
+    <div class="event-actions__comments event-actions_flex pointer color color-black"
+         [routerLink] = "['/post', post.id]">
       <i class="material-icons">
         mode_comment
       </i>

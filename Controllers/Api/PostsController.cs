@@ -276,6 +276,7 @@ namespace InsideMai.Controllers.Api
             var posts = await AllPosts.Where(p => p.Author.Id == userId && !p.IsAnonymous).ToListAsync();
 
             var viewModel = _mapper.Map<List<PostViewModel>>(posts);
+            await FillPostWithUserReactions(viewModel);
 
             return Ok(viewModel);
         }
@@ -289,6 +290,7 @@ namespace InsideMai.Controllers.Api
             var favPosts = allPosts.Where(p => userFavorites.Any(f => f.PostId == p.Id));
 
             var viewModel = _mapper.Map<List<PostViewModel>>(favPosts);
+            await FillPostWithUserReactions(viewModel);
 
             return Ok(viewModel);
         }

@@ -6,9 +6,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
-
-
 import { ToastrModule } from 'ngx-toastr';
+import {MatInputModule} from "@angular/material/input";
+import {MarkdownModule} from "ngx-markdown";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,7 +29,7 @@ import { NewCommentFormComponent } from './components/new-comment-form/new-comme
 import {HttpErrorInterceptor} from "./core/interceptros/http.interceptor";
 import {PostsService} from "./core/services/posts.service";
 import {CommentsService} from "./core/services/comments.service";
-import {DeparmentsService} from "./core/services/deparments.service";
+import {DepartmentsService} from "./core/services/deparments.service";
 import {UsersService} from "./core/services/users.service";
 import {RouterModule} from "@angular/router";
 import { LoginComponent } from './pages/login/login.component';
@@ -37,91 +38,38 @@ import {JwtHelperService, JwtModule} from "@auth0/angular-jwt";
 import {AuthGuard} from "./core/auth/auth-guard.service";
 import {JwtInterceptor} from "./core/interceptros/jwt.interceptor";
 import { CreatePostComponent } from './pages/create-post/create-post.component';
-import {MatInputModule} from "@angular/material/input";
-import {MarkdownModule} from "ngx-markdown";
-import {MatCheckboxModule} from "@angular/material/checkbox";
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { RestorePasswordFormComponent } from './components/restore-password-form/restore-password-form.component';
 import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
 import { ConfirmDeleteModalComponent } from './components/confirm-delete-modal/confirm-delete-modal.component';
+import {CoreModule} from "./core/core.module";
+import {SharedModule} from "./shared/shared.module";
+import {CreatePostModule} from "./pages/create-post/create-post.module";
+import {FeedModule} from "./pages/feed/feed.module";
+import {LoginModule} from "./pages/login/login.module";
+import {UserPostModule} from "./pages/user-post/user-post.module";
+import {UserProfileModule} from "./pages/user-profile/user-profile.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    SearchFormComponent,
-    ProfileComponent,
-    MainComponent,
     SidenavComponent,
-    FeedComponent,
-    PostComponent,
-    UserProfileComponent,
-    CommentComponent,
-    UserPostComponent,
-    LikeComponent,
-    NewCommentFormComponent,
-    LoginComponent,
-    CreatePostComponent,
-    NotFoundComponent,
-    LoginFormComponent,
-    RestorePasswordFormComponent,
-    ChangePasswordFormComponent,
-    ConfirmDeleteModalComponent,
+    HeaderComponent,
+    MainComponent,
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    TextareaAutosizeModule,
-    HttpClientModule,
     BrowserAnimationsModule,
-    EditorModule,
-    MatDialogModule,
-    MatButtonModule,
-    MarkdownModule.forRoot({
-      sanitize: SecurityContext.NONE
-    }),
-    ToastrModule.forRoot({
-      timeOut: 1500
-    }),
-    RouterModule.forRoot([
-      {path: 'login', component: LoginComponent,
-        children : [
-          {path: '', component: LoginFormComponent},
-          {path: 'restore', component: RestorePasswordFormComponent}
-        ]},
-      {
-        path: '',
-        component: MainComponent,
-        canActivate: [AuthGuard],
-        children: [
-          {path: '', component: FeedComponent},
-          {path: 'post/:id', component: UserPostComponent},
-          {path: 'user/:id', component: UserProfileComponent},
-          {path: ':type/:level', component: FeedComponent },
-          {path: 'create', component: CreatePostComponent},
-          {path: '**', component: NotFoundComponent}
-        ]
-      },
-    ]),
-    ReactiveFormsModule,
-    FormsModule,
-    JwtModule,
-    MatInputModule,
-    MatCheckboxModule
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    PostsService,
-    CommentsService,
-    DeparmentsService,
-    UsersService,
-    JwtHelperService,
-    AuthGuard
+    BrowserModule,
+    CoreModule,
+    SharedModule,
+    CreatePostModule,
+    FeedModule,
+    LoginModule,
+    UserPostModule,
+    UserProfileModule,
+    AppRoutingModule
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ChangePasswordFormComponent,
-  ConfirmDeleteModalComponent]
 })
 export class AppModule { }

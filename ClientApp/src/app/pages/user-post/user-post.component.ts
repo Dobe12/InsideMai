@@ -15,8 +15,10 @@ import {CommentsService} from "../../core/services/comments.service";
 })
 
 export class UserPostComponent implements OnInit {
+
   post: Post;
   postComments: Comment[];
+
   constructor(private postsService: PostsService,
               private commentsService: CommentsService,
               private route: ActivatedRoute,
@@ -32,21 +34,18 @@ export class UserPostComponent implements OnInit {
 
       return forkJoin([post, postComments]);
     })).subscribe(result => {
-      this.post = result[0] as Post;
-      this.postComments = result[1] as Comment[];
-      console.log(this.post);
-
+      this.post = result[0];
+      this.postComments = result[1];
     });
   }
 
   addComment(comment: Comment) {
     this.postsService.addCommentOnPost(this.post.id, comment).subscribe(res => {
-      this.postComments.push(res as Comment);
+      this.postComments.push(res);
       this.post.commentsCount++;
       this.toastr.success("Комментарий добавлен");
     });
   }
-
 
   deletePost(id: any) {
     this.postsService.delete(id).subscribe(() => {

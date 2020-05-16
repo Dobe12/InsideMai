@@ -10,6 +10,7 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
   submitted = false;
   authForm: FormGroup;
 

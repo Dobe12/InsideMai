@@ -10,14 +10,14 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./restore-password-form.component.scss']
 })
 export class RestorePasswordFormComponent implements OnInit {
+
   phone: FormControl;
   phoneIsInvalid = false;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private toastr: ToastrService
-  ) {
+    private toastr: ToastrService) {
     this.phone = this.fb.control('+7', [Validators.required, Validators.pattern("[+0-9 ]{12}")]);
   }
 

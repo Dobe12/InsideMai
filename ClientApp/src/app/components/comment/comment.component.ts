@@ -13,6 +13,7 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 })
 
 export class CommentComponent implements OnInit {
+
   @Input() comment: Comment;
   @Output() onDeleteComment = new EventEmitter();
 
@@ -24,7 +25,7 @@ export class CommentComponent implements OnInit {
 
   ngOnInit(): void {
   }
-// Потов вынести все в общий сервис!!!
+// Потом вынести все в общий сервис!!!
   switchLike(comment: Comment) {
     if (!comment.likedByCurrentUser) {
       this.addLike(comment);

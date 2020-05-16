@@ -28,6 +28,7 @@ import {UserReactionsService} from "../../core/services/user-reactions.service";
   ]
 })
 export class UserProfileComponent implements OnInit {
+
   user: User;
   userPosts: Post[];
   userPostType = 'userPost';
@@ -48,8 +49,8 @@ export class UserProfileComponent implements OnInit {
 
       return forkJoin([user, userPosts]);
     })).subscribe(result => {
-      this.user = result[0] as User;
-      this.userPosts = result[1] as Post[];
+      this.user = result[0];
+      this.userPosts = result[1];
     });
   }
 
@@ -64,7 +65,7 @@ export class UserProfileComponent implements OnInit {
 
         this.usersService.update(updatedUser).subscribe(result => {
           this.toastr.success("Фотография изменена");
-          this.user = result as User;
+          this.user = result;
         });
       };
     }
@@ -75,13 +76,13 @@ export class UserProfileComponent implements OnInit {
       this.postsService.getUserFavPosts(this.user.id).subscribe(
         result => {
           this.userPostType = type;
-          this.userPosts = result as Post[];
+          this.userPosts = result;
         });
     } else if (type === 'userPost') {
       this.postsService.getUserPosts(this.user.id).subscribe(
         result => {
           this.userPostType = type;
-          this.userPosts = result as Post[];
+          this.userPosts = result;
         });
     }
   }
@@ -101,7 +102,6 @@ export class UserProfileComponent implements OnInit {
       this.toastr.success("Вы успешно попдисались");
     });
   }
-
 
   Unsubscribe(id: number) {
     this.userReactionsService.unsubscribe(id).subscribe(result => {
