@@ -5,9 +5,15 @@
     </div>
     <div class="post-header__userinfo">
       <div class="post-header__username pointer"
+           *ngIf="!post?.isAnonymous; else isAnon"
            [routerLink] = "['/user', post.author.id]">
         {{post?.author?.fullName }}
       </div>
+      <ng-template #isAnon>
+        <div class="post-header__username">
+          {{post?.author?.fullName }}
+        </div>
+      </ng-template>
       <div class="post-header__time">
         {{post.publishDate | date}}
       </div>

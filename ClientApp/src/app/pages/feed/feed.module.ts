@@ -1,21 +1,21 @@
 import {NgModule, SecurityContext} from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {FeedComponent} from "./feed.component";
-import {MarkdownModule} from "ngx-markdown";
 import {SharedModule} from "../../shared/shared.module";
+import {RouterModule} from "@angular/router";
+
 
 
 
 @NgModule({
   declarations: [
     FeedComponent,
-
   ],
   imports: [
-    MarkdownModule.forRoot({
-      sanitize: SecurityContext.NONE
-    }),
-    SharedModule
+    SharedModule,
+    RouterModule.forChild([
+      {path: ':type/:level', component: FeedComponent },
+      {path: '', component: FeedComponent}
+    ])
   ]
 })
 export class FeedModule { }

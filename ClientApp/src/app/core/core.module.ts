@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {HttpErrorInterceptor} from "./interceptros/http.interceptor";
 import {JwtInterceptor} from "./interceptros/jwt.interceptor";
@@ -10,7 +9,6 @@ import {UsersService} from "./services/users.service";
 import {JwtHelperService, JwtModule} from "@auth0/angular-jwt";
 import {AuthGuard} from "./auth/auth-guard.service";
 import {SharedModule} from "../shared/shared.module";
-
 
 
 @NgModule({

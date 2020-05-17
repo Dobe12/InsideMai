@@ -16,7 +16,9 @@
 
   .user-profile__header {
     height: 60%;
-    background-image: url(https://yastatic.net/s3/district/prod/build/c0fba8bafaf86f831017cf3343989a17.svg);
+    background-image: url("../../../assets/images/12.jpg");
+    background-position: center;
+    background-size: 100%;
     position: relative;
 
     .user-profile__pic {

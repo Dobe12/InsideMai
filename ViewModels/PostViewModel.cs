@@ -13,6 +13,7 @@ namespace InsideMai.ViewModels
         public int SavesCount { get; set; }
         public int CommentsCount { get; set; }
         public PostType Type { get; set; }
+        public bool IsAnonymous { get; set; }
         public bool LikedByCurrentUser { get; set; }
         public bool AddedToFavByCurrentUser { get; set; }
 

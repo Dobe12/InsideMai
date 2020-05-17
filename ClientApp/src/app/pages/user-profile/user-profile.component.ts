@@ -9,9 +9,8 @@ import {forkJoin} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {ChangePasswordFormComponent} from "../../components/change-password-form/change-password-form.component";
-import {DialogPosition} from "@angular/material/dialog/dialog-config";
 import {transition, trigger, useAnimation} from "@angular/animations";
-import {bounce, bounceIn, bounceInLeft, fadeInLeft} from "ng-animate";
+import {bounceIn} from "ng-animate";
 import {UserReactionsService} from "../../core/services/user-reactions.service";
 
 @Component({
@@ -96,7 +95,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   Subscribe(id: number) {
-    console.log(id);
     this.userReactionsService.subscribe(id).subscribe(result => {
       this.user.isSubscribe = true;
       this.toastr.success("Вы успешно попдисались");

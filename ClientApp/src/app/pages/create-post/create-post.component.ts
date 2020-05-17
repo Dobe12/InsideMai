@@ -40,7 +40,6 @@ export class CreatePostComponent implements OnInit {
   }
 
   createPost() {
-    console.log(this.createPostForm.get('postType'));
 
     if (this.createPostForm.invalid) {
       this.toastr.error('Нельзя создать пустой пост');
@@ -51,7 +50,7 @@ export class CreatePostComponent implements OnInit {
     this.postsService.create(post).subscribe(
       data => {
         this.toastr.success('Пост успешно создан');
-        this.router.navigate(['/']);
+        this.router.navigate(['/all/all']);
       });
   }
 

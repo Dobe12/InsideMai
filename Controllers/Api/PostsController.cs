@@ -94,7 +94,10 @@ namespace InsideMai.Controllers.Api
             post.Author = await _currentUser.GetCurrentUser(HttpContext);
 
             _context.Posts.Add(post);
-            await NotifySubscribers(post);
+            if (!post.IsAnonymous)
+            {
+                await NotifySubscribers(post);
+            }
 
             await _context.SaveChangesAsync();
 
