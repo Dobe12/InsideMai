@@ -74,7 +74,6 @@ export class AuthService  {
 }
 
 
-
 export class JwtResponse {
   token: string;
 }

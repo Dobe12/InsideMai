@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="491169b3-b491-4811-86bd-8f66f2b2e842" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app/core/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/auth/auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Data/StubDataInitializer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Data/StubDataInitializer.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EditorConfigPreviewManager">
+    <editorConfig file="$PROJECT_DIR$/../.editorconfig" previewFile="$PROJECT_DIR$/app/app.component.html" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1cMPB4YpscqM7rCupeoSSamcSyJ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="ts.external.directory.path" value="C:\Users\Professional\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\193.6015.40\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="491169b3-b491-4811-86bd-8f66f2b2e842" name="Default Changelist" comment="" />
+      <created>1590335349448</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1590335349448</updated>
+      <workItem from="1590335350843" duration="10657000" />
+      <workItem from="1590692856350" duration="101000" />
+      <workItem from="1590952567688" duration="2112000" />
+      <workItem from="1590954715424" duration="563000" />
+      <workItem from="1590955353771" duration="370000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/environments/environment.js.map" />
+        <option value="$PROJECT_DIR$/environments/environment.js" />
+        <option value="$PROJECT_DIR$/app/core/services/data.service.js.map" />
+        <option value="$PROJECT_DIR$/app/core/services/data.service.js" />
+        <option value="$PROJECT_DIR$/main.js.map" />
+        <option value="$PROJECT_DIR$/main.js" />
+      </list>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="132" y="278" key="#Inspections" timestamp="1590338922787">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="132" y="278" key="#Inspections/0.0.2560.1400@0.0.2560.1400" timestamp="1590338922787" />
+    <state x="657" y="255" key="SettingsEditor" timestamp="1590338985601">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="657" y="255" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1590338985601" />
+    <state x="878" y="480" width="794" height="722" key="find.popup" timestamp="1590336024624">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="878" y="480" width="794" height="722" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1590336024624" />
+  </component>
+</project>

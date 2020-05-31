@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using InsideMai.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,15 +20,22 @@ namespace InsideMai.Data
 
         private static void InitializeUsers(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasData(
-                new
+           
+        }
+
+        private static void InitializeIdentityUsers(ModelBuilder modelBuilder)
+        {
+            var stubUsers = new List<User>()
+            {
+               new User()
                 {
                     Id = 1,
-                    FirstName = "Андрей",
+                    FirstName = "Павел",
+                    LastName = "Андреев",
                     DepartmentId = 16,
                     IsDeleted = false,
                     Role = User.Roles.Admin,
-                    Email = "Admin",
+                    Email = "Admin2",
                     AccessFailedCount = 4,
                     EmailConfirmed = true,
                     LockoutEnabled = true,
@@ -35,10 +43,12 @@ namespace InsideMai.Data
                     TwoFactorEnabled = true,
                     UserPic = "09822d45-28db-4189-8125-a12dd0d8e5d2.png"
                 },
-                new
+                new User()
                 {
                     Id = 2,
-                    FirstName = "Петя",
+                    FirstName = "Никита",
+                    LastName = "Петров",
+                    Email = "two@mail.ru",
                     DepartmentId = 16,
                     IsDeleted = false,
                     Role = User.Roles.Student,
@@ -49,11 +59,11 @@ namespace InsideMai.Data
                     TwoFactorEnabled = true,
                     UserPic = "09822d45-28db-4189-8125-a12dd0d8e5d2.png"
                 },
-                new
+                new User()
                 {
                     Id = 3,
                     FirstName = "Алексей",
-                    LastName = "Долматов",
+                    LastName = "Бойко",
                     Email = "guf@mail.ru",
                     DepartmentId = 17,
                     IsDeleted = false,
@@ -65,7 +75,7 @@ namespace InsideMai.Data
                     TwoFactorEnabled = true,
                     UserPic = "09822d45-28db-4189-8125-a12dd0d8e5d2.png"
                 },
-                new
+                new User()
                 {
                     Id = 4,
                     FirstName = "Виктор",
@@ -81,11 +91,10 @@ namespace InsideMai.Data
                     TwoFactorEnabled = true,
                     UserPic = "0292ef25-04b0-474b-8551-9610ef744416.png"
                 },
-                new
+                new User()
                 {
                     Id = 5,
-                    FirstName = "Ваня",
-                    LastName = "Пук",
+                    FirstName = "Секция БОКСА",
                     Email = "vanya@mail.ru",
                     DepartmentId = 17,
                     IsDeleted = false,
@@ -97,7 +106,7 @@ namespace InsideMai.Data
                     TwoFactorEnabled = true,
                     UserPic = "0292ef25-04b0-474b-8551-9610ef744416.png"
                 },
-                new
+                new User()
                 {
                     Id = 6,
                     FirstName = "Алена",
@@ -113,10 +122,10 @@ namespace InsideMai.Data
                     TwoFactorEnabled = true,
                     UserPic = "0292ef25-04b0-474b-8551-9610ef744416.png"
                 },
-                new
+                new User()
                 {
                     Id = 7,
-                    FirstName = "Петя",
+                    FirstName = "Профком",
                     Email = "senya@mail.ru",
                     DepartmentId = 14,
                     IsDeleted = false,
@@ -127,16 +136,28 @@ namespace InsideMai.Data
                     PhoneNumberConfirmed = true,
                     TwoFactorEnabled = true,
                     UserPic = "0292ef25-04b0-474b-8551-9610ef744416.png"
-                });
-        }
+                }
+            };
 
-        private static void InitializeIdentityUsers(ModelBuilder modelBuilder)
-        {
+            stubUsers.ForEach(u =>
+            {
+                u.NormalizedEmail = u?.Email.ToUpper();
+                u.UserName = $"{u?.FirstName} {u?.LastName}";
+                u.NormalizedUserName = $"{u?.FirstName} {u?.LastName}";
+                u.AccessFailedCount = 4;
+                u.EmailConfirmed = true;
+                u.LockoutEnabled = true;
+                u.PhoneNumberConfirmed = true;
+                u.TwoFactorEnabled = true;
+                u.SecurityStamp = string.Empty;
+                u.PasswordHash = new PasswordHasher<User>().HashPassword(u, "123");
+            });
+        
             var user = new User
             {
-                FirstName = "Виталий",
-                LastName = "Цаль",
-                Id = 228,
+                FirstName = "Андрей",
+                LastName = "Афанасенков",
+                Id = 322,
                 Email = "Admin",
                 NormalizedEmail = "Admin".ToUpper(),
                 UserName = "Admin",
@@ -152,7 +173,9 @@ namespace InsideMai.Data
 
             user.PasswordHash = new PasswordHasher<User>().HashPassword(user, "123");
 
-            modelBuilder.Entity<User>().HasData(user);
+            stubUsers.Add(user);
+
+            modelBuilder.Entity<User>().HasData(stubUsers);
         }
 
         private static void InitializeRoles(ModelBuilder modelBuilder)
